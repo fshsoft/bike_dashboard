@@ -1,0 +1,35 @@
+{% extends 'BikeDashboardBundle::layout.html.twig' %}
+
+{% block content %}
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <h1>
+            单车管理
+            <small> bike</small>
+        </h1>
+        <div class="breadcrumb">
+            <i class="fa fa-bicycle"></i>
+            <span>总数：32万台</span>&nbsp;&nbsp;
+            <span>使用中：6985台</span>&nbsp;&nbsp;
+            <span>故障：99台</span> 
+        </div>
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+        <div class="row">
+        <div class="col-xs-12">
+            <div class="nav-tabs-custom">
+                <!-- tab 标签 -->
+                <ul class="nav nav-tabs">
+                    <li class="active"><a href="#" data-toggle="tab">单车明细</a></li>
+                    <li class=""><a href="#" data-toggle="tab">车锁管理</a></li>
+                </ul>
+
+            </div>
+        </div>
+    </div>
+      
+    </section>
+    <!-- /.content -->
+{% endblock %}

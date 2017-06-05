@@ -1,6 +1,6 @@
 <?php
 
-namespace Bike\Dashboard\Controller;
+namespace Bike\Dashboard\Controller\Partner;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
@@ -11,19 +11,19 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Cookie;
 
+use Bike\Dashboard\Controller\AbstractController;
 
 /**
- * @Route("/region")
+ * @Route("/partner")
  */
-class RegionController extends AbstractController
+class IndexController extends AbstractController
 {
     /**
-     * @Route("/", name="region")
-     * @Template("BikeDashboardBundle:region:index.html.twig")
+     * @Route("/", name="partner")
+     * @Template("BikeDashboardBundle:partner:index.html.twig")
      */
     public function indexAction(Request $request)
     {
-        //die("sss");
         return array();
     }
 
