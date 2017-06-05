@@ -1,0 +1,6 @@
+bike_dashboard:
+    resource: "@BikeDashboardBundle/Controller/"
+    type: "annotation"
+
+logout:
+    path: /logout

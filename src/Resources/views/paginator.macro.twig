@@ -1,0 +1,39 @@
+{% macro paginate(currentPage, totalPage, middleSize, route, params, classes) %}
+<ul class="pagination pagination-sm no-margin {{ classes|join(' ') }}">
+{% set pages = bike_partner_paginate(currentPage, totalPage, middleSize) %}
+{% set params = params | merge({p:'page'}) %}
+{% set uri = path(route, params) %}
+{% if pages.first %}
+                          <li><a href="{{ uri|replace({'page':pages.first}) }}">首页</a></li>
+{% else %}
+                          <li class="disabled"><a href="#">首页</a></li>
+{% endif %}
+{% if pages.prev %}
+                          <li><a href="{{ uri|replace({'page':pages.prev}) }}">上一页</a></li>
+
+{% else %}
+                          <li class="disabled"><a href="#">上一页</a></li>
+{% endif %}
+
+{% for v in pages.middles %}
+{% if v == currentPage %}
+                          <li class="active"><a href="#">{{ v }}<span class="sr-only">(current)</span></a></li>
+{% else %}
+                          <li><a href="{{ uri|replace({'page':v}) }}">{{ v }}</a></li>
+{% endif %}
+{% endfor %}
+
+{% if pages.next %}
+                          <li><a href="{{ uri|replace({'page':pages.next}) }}">下一页</a></li>
+{% else %}
+                          <li class="disabled"><a href="#">下一页</a></li>
+{% endif %}
+
+{% if pages.last %}
+                          <li><a href="{{ uri|replace({'page':pages.last}) }}">末页</a></li>
+{% else %}
+                          <li class="disabled"><a href="#">末页</a></li>
+{% endif %}
+                        </ul>
+{% endmacro %}
+

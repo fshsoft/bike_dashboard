@@ -13,8 +13,8 @@ use Symfony\Component\HttpFoundation\Cookie;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
-use Bike\Common\Exception\Logic\LogicExceptionInterface;
-use Bike\Common\Error\ErrorCode;
+use Bike\Dashboard\Exception\Logic\LogicExceptionInterface;
+use Bike\Dashboard\Error\ErrorCode;
 
 abstract class AbstractController extends Controller
 {

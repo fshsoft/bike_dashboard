@@ -11,7 +11,7 @@ use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\Exception\LogicException;
 use Symfony\Component\DependencyInjection\Definition;
 
-use Bike\Common\Exception\Debug\DebugException;
+use Bike\Dashboard\Exception\Debug\DebugException;
 
 class BikeDashboardExtension extends Extension implements PrependExtensionInterface
 {
@@ -55,6 +55,7 @@ class BikeDashboardExtension extends Extension implements PrependExtensionInterf
         }
 
         $loader->load('dao/primary.xml');
+        $loader->load('dao/dashboard.xml');
     }
 
     public function getAlias()

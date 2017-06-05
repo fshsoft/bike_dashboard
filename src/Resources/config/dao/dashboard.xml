@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<container xmlns="http://symfony.com/schema/dic/services"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+   <parameters>
+        <parameter key="bike.dashboard.dao.dashboard.passport.class">Bike\Dashboard\Db\Dashboard\PassportDao</parameter>
+    </parameters>
+
+    <services>
+        <service id="bike.dashboard.dao.dashboard.passport" class="%bike.dashboard.dao.dashboard.passport.class%">
+            <argument type="service" id="bike.dashboard.params.dao.dashboard.conn_id"/>
+            <argument>%bike.dashboard.params.dao.dashboard.db_name%</argument>
+            <argument>%bike.dashboard.params.dao.dashboard.prefix%</argument>
+            <argument>Bike\Dashboard\Db\Dashboard\Passport</argument>
+        </service>
+    </services>
+</container>
