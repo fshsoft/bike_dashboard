@@ -1,6 +1,6 @@
 <?php
 
-namespace Bike\Partner\Service;
+namespace Bike\Dashboard\Service;
 
 use Symfony\Component\DependencyInjection\ContainerAwareTrait;
 

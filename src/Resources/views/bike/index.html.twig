@@ -17,19 +17,177 @@
 
     <!-- Main content -->
     <section class="content">
-        <div class="row">
-        <div class="col-xs-12">
-            <div class="nav-tabs-custom">
-                <!-- tab 标签 -->
-                <ul class="nav nav-tabs">
-                    <li class="active"><a href="#" data-toggle="tab">单车明细</a></li>
-                    <li class=""><a href="#" data-toggle="tab">车锁管理</a></li>
-                </ul>
+    <div class="row">
+        <div class="col-md-12">
+            
+          <!-- Custom Tabs -->
+          <div class="nav-tabs-custom">
+            <ul class="nav nav-tabs">
+              <li class="active"><a href="#tab_1" data-toggle="tab">单车列表</a></li>
+              <li><a href="#tab_2" data-toggle="tab">车锁管理</a></li>
+            </ul>
+            <div class="tab-content">
+                <div class="tab-pane active" id="tab_1">
+                    <div class="tab-pane active" id="bicycle" >
+                        <form class="search_form" id="search_form_bike" action="#" method="get" >
+                            <!-- 搜索 -->
+                            <div class="dataTables_length fa-border" style="margin: 10px 0; padding: 10px">
+                                <select name="filter_type" id="filter_type" class="input-sm">
+                                    <option value="bicycle_sn" selected="">单车编号</option>
+                                    <option value="lock_sn">车锁编号</option>
+                                    <option value="region_name">区域</option>
+                                    <option value="cooperator_name">合伙人</option>
+                                </select>
+                                <input type="text" name="bicycle_sn" value="" id="filter_text" class="input-sm" style="border: 1px solid #a9a9a9;">
+                                <select name="type" class="input-sm">
+                                    <option value="">单车类型</option>
+                                    <option value="1">一代</option>
+                                </select>
+                                <select name="is_using" class="input-sm">
+                                    <option value="">是否使用中</option>
+                                    <option value="1">是</option>
+                                    <option value="0">否</option>
+                                </select>
 
+                                <div class="pull-right">
+                                    <button type="submit" class="btn btn-primary btn-sm"><i class="fa fa-search"></i>&nbsp;搜索</button>
+                                </div>
+                            </div>
+                        </form>
+                        <div class="form-group">
+                            <div class="btn-group">
+                                <a href="{{ path('bike_new') }}" class="btn btn-primary btn-sm"><i class="fa fa-plus"></i>&nbsp;新增</a>
+                                <button type="button" class="btn btn-primary dropdown-toggle btn-sm" data-toggle="dropdown">
+                                    <span class="caret"></span>
+                                    <span class="sr-only">Toggle Dropdown</span>
+                                </button>
+                                <ul class="dropdown-menu" role="menu">
+                                    <li><a href="#">批量新增</a></li>
+                                </ul>
+                            </div>
+                            <button class="btn btn-default btn-sm button-upload" data-action="#"><i class="fa fa-upload"></i>&nbsp;导入</button>
+                            <button class="btn btn-default btn-sm" form="search_form" formmethod="post" formaction="#"><i class="fa fa-download"></i>&nbsp;导出</button>
+                            <a href="#" class="btn btn-default btn-sm"><i class="fa fa-qrcode"></i>&nbsp;导出二维码</a>
+                        </div>
+                    </div>
+                    <table id="example2" class="table table-bordered table-hover">
+                        <thead>
+                        <tr>
+                            <th>单车编号</th>
+                            <th>车锁编号</th>
+                            <th>单车类型</th>
+                            <th>城市</th>
+                            <th>是否使用中</th>
+                            <th>操作</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td>10000001</td>
+                            <td>10000001</td>
+                            <td>百宝1代</td>
+                            <td>上海</td>
+                            <td>是</td>
+                            <td>
+                                <div class="btn-group">
+                                    <button data-url="#" type="button" class="btn btn-info link"><i class="fa fa-fw fa-eye"></i>查看</button>
+                                    <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown">
+                                        <span class="caret"></span>
+                                        <span class="sr-only">Toggle Dropdown</span>
+                                    </button>
+                                    <ul class="dropdown-menu" role="menu">
+                                        <li><a href="#">编辑</a></li>
+                                        <li><a href="#">删除</a></li>
+                                    </ul>
+                                </div>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <!-- /.tab-pane -->
+
+                <div class="tab-pane" id="tab_2">
+                    <div class="tab-pane active" id="lock" >
+                        <form class="search_form" id="search_form_lock" action="#" method="get" >
+                            <!-- 搜索 -->
+                            <div class="dataTables_length fa-border" style="margin: 10px 0; padding: 10px">
+                                <select name="filter_type" id="filter_type" class="input-sm">
+                                    <option value="bicycle_sn" selected="">车锁编号</option>
+                                    <option value="region_name">区域</option>
+                                    <option value="cooperator_name">合伙人</option>
+                                </select>
+                                <input type="text" name="bicycle_sn" value="" id="filter_text" class="input-sm" style="border: 1px solid #a9a9a9;">
+                                <select name="is_using" class="input-sm">
+                                    <option value="">状态</option>
+                                    <option value="1">开锁</option>
+                                    <option value="0">已关锁</option>
+                                </select>
+                                <div class="pull-right">
+                                    <button type="submit" class="btn btn-primary btn-sm"><i class="fa fa-search"></i>&nbsp;搜索</button>
+                                </div>
+                            </div>
+                        </form>
+                        <div class="form-group">
+                            <div class="btn-group">
+                                <a href="#" class="btn btn-primary btn-sm"><i class="fa fa-plus"></i>&nbsp;新增</a>
+                                <button type="button" class="btn btn-primary dropdown-toggle btn-sm" data-toggle="dropdown">
+                                    <span class="caret"></span>
+                                    <span class="sr-only">Toggle Dropdown</span>
+                                </button>
+                                <ul class="dropdown-menu" role="menu">
+                                    <li><a href="#">批量新增</a></li>
+                                </ul>
+                            </div>
+                            <button class="btn btn-default btn-sm button-upload" data-action="#"><i class="fa fa-upload"></i>&nbsp;导入</button>
+                            <button class="btn btn-default btn-sm" form="search_form" formmethod="post" formaction="#"><i class="fa fa-download"></i>&nbsp;导出</button>
+                        </div>
+                    </div>
+                    <table id="example2" class="table table-bordered table-hover">
+                        <thead>
+                        <tr>
+                            <th>锁编号</th>
+                            <th>合伙人</th>
+                            <th>当前电量(百分比)</th>
+                            <th>开锁次数</th>
+                            <th>更新时间</th>
+                            <th>状态</th>
+                            <th>操作</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td>10000001</td>
+                            <td>千樱科技</td>
+                            <td>99</td>
+                            <td>26</td>
+                            <td>2017-06-06 09:50:59</td>
+                            <td>开锁</td>
+                            <td>
+                                <div class="btn-group">
+                                    <button data-url="#" type="button" class="btn btn-info link"><i class="fa fa-fw fa-eye"></i>查看</button>
+                                    <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown">
+                                        <span class="caret"></span>
+                                        <span class="sr-only">Toggle Dropdown</span>
+                                    </button>
+                                    <ul class="dropdown-menu" role="menu">
+                                        <li><a href="#">编辑</a></li>
+                                        <li><a href="#">删除</a></li>
+                                    </ul>
+                                </div>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+
+                </div>
+                <!-- /.tab-pane -->
             </div>
+            <!-- /.tab-content -->
+          </div>
+          <!-- nav-tabs-custom -->
         </div>
     </div>
-      
     </section>
     <!-- /.content -->
 {% endblock %}

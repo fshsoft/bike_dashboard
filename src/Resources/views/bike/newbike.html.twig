@@ -1,0 +1,98 @@
+{% extends 'BikeDashboardBundle::layout.html.twig' %}
+
+{% block content %}
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <h1>
+        新增单车
+        <small></small>
+      </h1>
+      <ol class="breadcrumb">
+        <li><i class="fa fa-dashboard"></i> 首页</li>
+        <li>单车管理</li>
+        <li><a href="{{ path('bike') }}">单车</a></li>
+        <li class="active">新增</li>
+      </ol>
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+      <div class="row">
+        <div class="col-md-12">
+          <!-- general form elements -->
+          <div class="box box-primary">
+            <div class="box-header with-border">
+              <h3 class="box-title">单车信息</h3>
+            </div>
+            <!-- /.box-header -->
+            <!-- form start -->
+            <form role="form" id="new-bike-form">
+          <div class="row">
+              <div class="col-md-6 col-sm-12 col-xs-12">
+              <div class="box-body">
+                <div class="callout callout-danger" style="display:none">
+                  <h4>创建失败</h4>
+                  <p></p>
+                </div>
+                <div class="form-group">
+                  <label for="name">单车编号</label>
+                  <input type="text" class="form-control" id="bike_sn" name="bike_sn" placeholder="" required="required">
+                </div>
+                <div class="form-group">
+                  <label for="type">单车类型</label>
+                  <select name="type" class="form-control select2">
+                    <option value="">请选择</option>
+                    <option value="1">一代</option>
+                    <option value="2">二代</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label for="region">所在区域</label>
+                  <select name="region" class="form-control select2">
+                    <option value="">请选择</option>
+                    <option value="1">上海</option>
+                    <option value="2">成都</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label for="repwd">车锁编号</label>
+                  <input type="text" class="form-control" id="sn" name="lock_sn" placeholder="" required="required">
+                </div>
+              </div>
+              <!-- /.box-body -->
+    </div>
+</div>
+
+              <div class="box-footer">
+                <button type="submit" class="btn btn-primary">创建</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+{% endblock %}
+
+{% block footer_js %}
+{{ parent() }}
+<script>
+$(function(){
+    var $form = $('#new-bike-form');
+    $form.submit(function(){
+        var url = '{{ path('bike_new') }}';
+        var data = $form.serializeArray();
+
+        $form.find('button[type="submit"]').prop('disabled', true);
+        $.post(url, data, function(result){
+            if (result.errno == 0) {
+                window.location.href = '{{ path('bike') }}';
+            } else {
+                $form.find('.callout-danger').show().find('p').html(result.errmsg);
+            }
+            $form.find('button[type="submit"]').prop('disabled', false);
+        });
+        return false;
+    });
+});
+</script>
+{% endblock %}

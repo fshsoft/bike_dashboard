@@ -6,7 +6,10 @@ use Bike\Dashboard\Db\AbstractEntity;
 
 class Passport extends AbstractEntity
 {
-    const ROLE_ADMIN = 1;
+    const TYPE_ADMIN = 1;
+    const TYPE_CS_STAFF = 2;
+    const TYPE_AGENT = 3;
+    const TYPE_CLIENT = 4;
 
     protected static $pk = 'id';
 
