@@ -1,0 +1,127 @@
+{% extends 'BikeDashboardBundle::layout.html.twig' %}
+
+{% block content %}
+    <!-- Content Header (Page header) -->
+<section class="content-header">
+    <h1>
+        故障记录列表
+        <small>fault</small>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li class="active">运维管理</li>
+        <li >故障记录列表</li>
+    </ol>
+</section>
+<!-- Main content -->
+<section class="content">
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="nav-tabs-custom">
+                <!-- tab 标签 -->
+                <ul class="nav nav-tabs">
+                    <li class="active"><a href="javascript:;" data-toggle="tab">故障记录列表</a></li>
+                </ul>
+                <div class="tab-content">
+                    <div class="tab-pane active" id="bicycle">
+                        <form class="search_form" id="search_form" action="#" method="get">
+                            <!-- 搜索 -->
+                                <select name="filter_type" id="filter_type" class="input-sm">
+                                    <option value="bicycle_sn" selected="">单车编号</option>
+                                    <option value="lock_sn">车锁编号</option>
+                                    <option value="user_name">用户名</option>
+                                </select>
+                                <input type="text" name="bicycle_sn" value="" id="filter_text" class="input-sm" style="border: 1px solid #a9a9a9;">
+                                <select class="input-sm" name="fault_type">
+                                    <option value="">故障类型</option>
+                                    <option value="1">二维码脱落</option>
+                                    <option value="9">开不了锁</option>
+                                    <option value="8">其他</option>
+                                    <option value="7">踏板坏了</option>
+                                    <option value="6">链条掉了</option>
+                                    <option value="5">车胎漏气</option>
+                                    <option value="4">龙头歪斜</option>
+                                    <option value="3">刹车失灵</option>
+                                    <option value="2">车铃不响</option>
+                                    <option value="10">关不了锁</option>
+                                </select>
+                                <input type="text" name="add_time" value="" class="input-sm date-range" style="border: 1px solid #a9a9a9;" placeholder="上报时间">
+
+                                <div class="pull-right">
+                                    <button type="submit" class="btn btn-primary btn-sm"><i class="fa fa-search"></i>&nbsp;搜索</button>
+                                </div>
+                            </div>
+                        </form>
+                        <div class="form-group">
+                            <button class="btn btn-default btn-sm" form="search_form" formmethod="post" formaction="#"><i class="fa fa-download"></i>&nbsp;导出</button>
+                        </div>
+                        <form id="table_form" class="table_form" method="post">
+                            <table class="table table-bordered table-hover dataTable" role="grid">
+                                <thead>
+                                <tr>
+                                    <th>单车编号</th>
+                                    <th>锁编号</th>
+                                    <th>故障类型</th>
+                                    <th>用户名</th>
+                                    <th>上报时间</th>
+                                    <th style="min-width:130px;">操作</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr>
+                                    <td>377979</td>
+                                    <td>063072965557</td>
+                                    <td>二维码脱落</td>
+                                    <td>13713327764</td>
+                                    <td>2017-03-27 14:53:53</td>
+                                    <td>
+                                        <button data-url="#" type="button" class="btn btn-info link"><i class="fa fa-fw fa-eye"></i>查看</button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>377979</td>
+                                    <td>063072965557</td>
+                                    <td>二维码脱落,刹车失灵,车胎漏气</td>
+                                    <td>13612670009</td>
+                                    <td>2017-03-26 11:14:26</td>
+                                    <td>
+                                        <button data-url="#" type="button" class="btn btn-info link"><i class="fa fa-fw fa-eye"></i>查看</button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>370141</td>
+                                    <td>063072632892</td>
+                                    <td>链条掉了</td>
+                                    <td>15070917200</td>
+                                    <td>2017-03-25 16:57:26</td>
+                                    <td>
+                                        <button data-url="#" type="button" class="btn btn-info link"><i class="fa fa-fw fa-eye"></i>查看</button>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>     
+</section>
+    <!-- /.content -->
+{% endblock %}
+
+{% block footer_js %}
+{{ parent() }}
+<script type="text/javascript">
+    $('.date-range').daterangepicker({
+        locale:{
+            format: 'YYYY-MM-DD',
+            isAutoVal:false,
+        }
+    });
+
+    $("#filter_type").change(function() {
+        $("#filter_text").attr("name", $(this).val());
+    });
+</script>
+{% endblock %}

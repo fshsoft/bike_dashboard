@@ -14,20 +14,20 @@ use Symfony\Component\HttpFoundation\Cookie;
 use Bike\Dashboard\Controller\AbstractController;
 
 /**
- * @Route("/operation")
+ * @Route("/violation")
  */
-class IndexController extends AbstractController
+class ViolationController extends AbstractController
 {
     /**
-     * @Route("/", name="operation_fault")
-     * @Template("BikeDashboardBundle:operation/index:index.html.twig")
+     * @Route("/", name="operation_violation")
+     * @Template("BikeDashboardBundle:operation/violation:index.html.twig")
      */
     public function indexAction(Request $request)
     {
         return array();
     }
 
-  
+    
 
 
 }

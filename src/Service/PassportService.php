@@ -8,7 +8,6 @@ use Bike\Dashboard\Service\AbstractService;
 use Bike\Dashboard\Util\ArgUtil;
 use Bike\Dashboard\Db\Dashboard\Passport;
 
-
 class PassportService extends AbstractService
 {
     public function createPassport(array $data)
@@ -144,6 +143,16 @@ class PassportService extends AbstractService
             if ($password !== $repassword) {
                 throw new LogicException('两次输入的密码不一致');
             }
+        }
+    }
+
+    protected function validateType($type)
+    {
+        switch ($type) {
+            case Passport::TYPE_ADMIN:
+                return;
+            default:
+                throw new LogicException('用户类型不合法');
         }
     }
 

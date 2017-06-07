@@ -1,0 +1,103 @@
+{% extends 'BikeDashboardBundle::layout.html.twig' %}
+
+{% block content %}
+    <!-- Content Header (Page header) -->
+<section class="content-header">
+    <h1>
+        优惠券管理
+        <small>coupon</small>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li class="active">运维管理</li>
+        <li >优惠券管理</li>
+    </ol>
+</section>
+<!-- Main content -->
+<section class="content">
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="nav-tabs-custom">
+                <!-- tab 标签 -->
+                <ul class="nav nav-tabs">
+                    <li class="active"><a href="javascript:;" data-toggle="tab">优惠券列表</a></li>
+                </ul>
+                <div class="tab-content">
+                    <div class="tab-pane active" id="bicycle"> 
+                        <div class="form-group">
+                            <a href="#" class="btn btn-primary btn-sm"><i class="fa fa-plus"></i>&nbsp;新增</a>
+                        </div>
+                        <form id="table_form" class="table_form" method="post">
+                            <table class="table table-bordered table-hover dataTable" role="grid">
+                                <thead>
+                                <tr>
+                                    <th>用户名称</th>
+                                    <th>优惠券号码</th>
+                                    <th>优惠券名称</th>
+                                    <th>生效时间</th>
+                                    <th>失效时间</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr>
+                                    <td>15506359907</td>
+                                    <td>9Iq6NnP6mxCOMSw8wiQOrr3kjU4tdl1g</td>
+                                    <td>60分钟用车券</td>
+                                    <td>2017-03-27</td>
+                                    <td>2017-04-03</td>
+                                </tr>
+                                                                <tr>
+                                    <td>13934439456</td>
+                                    <td>fVL7P2lDNgyEm1UZnOgD6M9rCZle2UlV</td>
+                                    <td>60分钟用车券</td>
+                                    <td>2017-03-27</td>
+                                    <td>2017-04-03</td>
+                                </tr>
+                                                                <tr>
+                                    <td>18681150579</td>
+                                    <td>yq1vJdQJjDS0g6CsRAvPH6I0ndDJYYTl</td>
+                                    <td>1元代金券</td>
+                                    <td>2017-03-27</td>
+                                    <td>2017-04-12</td>
+                                </tr>
+                                                                <tr>
+                                    <td>18681150579</td>
+                                    <td>p4gYKnyofpL0xARp3yjlqaOFS1FRLgtw</td>
+                                    <td>30分钟用车券</td>
+                                    <td>2017-03-27</td>
+                                    <td>2017-04-18</td>
+                                </tr>
+                                                                <tr>
+                                    <td>18681150579</td>
+                                    <td>NCi4PgTfznwfLj3yb0nVpBuNr1PMteZR</td>
+                                    <td>1元代金券</td>
+                                    <td>2017-03-13</td>
+                                    <td>2017-04-05</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>     
+</section>
+    <!-- /.content -->
+{% endblock %}
+
+{% block footer_js %}
+{{ parent() }}
+<script type="text/javascript">
+    $('.date-range').daterangepicker({
+        locale:{
+            format: 'YYYY-MM-DD',
+            isAutoVal:false,
+        }
+    });
+
+    $("#filter_type").change(function() {
+        $("#filter_text").attr("name", $(this).val());
+    });
+</script>
+{% endblock %}

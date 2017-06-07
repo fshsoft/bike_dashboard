@@ -8,16 +8,34 @@ use Bike\Dashboard\Db\Dashboard\Passport;
 
 class User extends Passport implements UserInterface
 {
-    public function getId()
+
+    protected $roleMap = array(
+        Passport::TYPE_ADMIN => 'ROLE_ADMIN'
+    );
+
+     public function getId()
     {
         return $this->getCol('id');
     }
 
+    public function getType()
+    {
+        return $this->getCol('type');
+    }
+
+    public function getRole()
+    {
+        $type = $this->getCol('type');
+        if (isset($this->roleMap[$type])) {
+            return $this->roleMap[$type];
+        }
+    }
+
     public function getRoles()
     {
-        switch ($this->getCol('type')) {
-            case Passport::ROLE_ADMIN:
-                return array('ROLE_ADMIN');
+        $role = $this->getRole();
+        if ($role) {
+            return array($role);
         }
         return array();
     }

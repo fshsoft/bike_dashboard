@@ -20,7 +20,7 @@ class IndexController extends AbstractController
 {
     /**
      * @Route("/", name="partner")
-     * @Template("BikeDashboardBundle:partner:index.html.twig")
+     * @Template("BikeDashboardBundle:partner/index:index.html.twig")
      */
     public function indexAction(Request $request)
     {

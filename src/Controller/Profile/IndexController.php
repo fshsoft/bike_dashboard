@@ -20,14 +20,31 @@ class IndexController extends AbstractController
 {
     /**
      * @Route("/", name="profile")
-     * @Template("BikeDashboardBundle:profile:index.html.twig")
+     * @Template("BikeDashboardBundle:profile/index:index.html.twig")
      */
     public function indexAction(Request $request)
     {
+        $user = $this->getUser();
+        $id = $user->getId();
+        $adminService = $this->get('bike.dashboard.service.admin');
+        if ($request->isMethod('post')) {
+            $data = $request->request->all();
+            try {
+                $adminService->editAdmin($id,$data);
+                return $this->jsonSuccess();
+            } catch (\Exception $e) {
+                return $this->jsonError($e);
+            }
+        } else {
+            $admin = $adminService->getAdmin($id);
+            $passportService = $this->container->get('bike.dashboard.service.passport');
+            $passport = $passportService->getPassport($id);
+            return ['admin'=>$admin,'passport'=>$passport];
+        }
         return array();
     }
 
-  
+   
 
 
 }

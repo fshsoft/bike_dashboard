@@ -1,0 +1,167 @@
+{% extends 'BikeDashboardBundle::layout.html.twig' %}
+
+{% block content %}
+    <!-- Content Header (Page header) -->
+<section class="content-header">
+    <h1>
+        违规停放列表
+        <small>violation</small>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li class="active">运维管理</li>
+        <li >违规停放列表</li>
+    </ol>
+</section>
+<!-- Main content -->
+<section class="content">
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="nav-tabs-custom">
+                <!-- tab 标签 -->
+                <ul class="nav nav-tabs">
+                    <li class="active"><a href="javascript:;" data-toggle="tab">违规停放列表</a></li>
+                </ul>
+                <div class="tab-content">
+                    <div class="tab-pane active" id="bicycle">
+                        <form class="search_form" id="search_form" action="#" method="get">
+                            <!-- 搜索 -->
+                            <div class="dataTables_length fa-border" style="margin: 10px 0; padding: 10px">
+                                <select name="filter_type" id="filter_type" class="input-sm">
+                                    <option value="bicycle_sn" selected="">单车编号</option>
+                                    <option value="user_name">上报用户</option>
+                                    <option value="content">上报描述</option>
+                                </select>
+                                <input type="text" name="bicycle_sn" value="" id="filter_text" class="input-sm" style="border: 1px solid #a9a9a9;">
+                                <select class="input-sm" name="type">
+                                    <option value="">违停类型</option>
+                                    <option value="1">违停上报</option>
+                                    <option value="2">其他上报</option>
+                                </select>
+                                <input type="text" name="add_time" value="" class="input-sm date-range" style="border: 1px solid #a9a9a9;" placeholder="上报时间">
+
+                                <div class="pull-right">
+                                    <button type="submit" class="btn btn-primary btn-sm"><i class="fa fa-search"></i>&nbsp;搜索</button>
+                                </div>
+                            </div>
+                        </form>
+                        <div class="form-group">
+                            <button class="btn btn-default btn-sm" form="search_form" formmethod="post" formaction="#"><i class="fa fa-download"></i>&nbsp;导出</button>
+                        </div>
+                        <form id="table_form" class="table_form" method="post">
+                            <table class="table table-bordered table-hover dataTable" role="grid">
+                                <thead>
+                                <tr>
+                                    <th>单车编号</th>
+                                    <th>上报用户</th>
+                                    <th>上报描述</th>
+                                    <th>违规类型</th>
+                                    <th>上报时间</th>
+                                    <th style="min-width:130px;">操作</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr>
+                                    <!--<td><input type="checkbox" name="selected[]" value="31"></td>-->
+                                    <td>144430</td>
+                                    <td>13622609289</td>
+                                    <td>停在马路中间</td>
+                                    <td>违停上报</td>
+                                    <td>2017-03-26 11:57:12</td>
+                                    <td>
+                                        <button data-url="http://bike.e-stronger.com/bike/admin/index.php?route=operation/violation/info&amp;parking_id=31" type="button" class="btn btn-info link"><i class="fa fa-fw fa-eye"></i>查看</button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <!--<td><input type="checkbox" name="selected[]" value="30"></td>-->
+                                    <td>370141</td>
+                                    <td>15070917200</td>
+                                    <td>啦啦队队长和我</td>
+                                    <td>违停上报</td>
+                                    <td>2017-03-26 11:20:07</td>
+                                    <td>
+                                        <button data-url="http://bike.e-stronger.com/bike/admin/index.php?route=operation/violation/info&amp;parking_id=30" type="button" class="btn btn-info link"><i class="fa fa-fw fa-eye"></i>查看</button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <!--<td><input type="checkbox" name="selected[]" value="29"></td>-->
+                                    <td>377979</td>
+                                    <td>13068283100</td>
+                                    <td>扫码成功</td>
+                                    <td>违停上报</td>
+                                    <td>2017-03-26 09:39:54</td>
+                                    <td>
+                                        <button data-url="http://bike.e-stronger.com/bike/admin/index.php?route=operation/violation/info&amp;parking_id=29" type="button" class="btn btn-info link"><i class="fa fa-fw fa-eye"></i>查看</button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <!--<td><input type="checkbox" name="selected[]" value="28"></td>-->
+                                    <td>370141</td>
+                                    <td>15070917200</td>
+                                    <td>这辆车停在小区门口</td>
+                                    <td>违停上报</td>
+                                    <td>2017-03-25 10:07:54</td>
+                                    <td>
+                                        <button data-url="http://bike.e-stronger.com/bike/admin/index.php?route=operation/violation/info&amp;parking_id=28" type="button" class="btn btn-info link"><i class="fa fa-fw fa-eye"></i>查看</button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <!--<td><input type="checkbox" name="selected[]" value="27"></td>-->
+                                    <td>144430</td>
+                                    <td>18566514306</td>
+                                    <td>还是不是北京</td>
+                                    <td>其他上报</td>
+                                    <td>2017-03-23 16:40:47</td>
+                                    <td>
+                                        <button data-url="http://bike.e-stronger.com/bike/admin/index.php?route=operation/violation/info&amp;parking_id=27" type="button" class="btn btn-info link"><i class="fa fa-fw fa-eye"></i>查看</button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <!--<td><input type="checkbox" name="selected[]" value="26"></td>-->
+                                    <td>975634</td>
+                                    <td>18566514306</td>
+                                    <td>停在斑马线中间</td>
+                                    <td>违停上报</td>
+                                    <td>2017-03-23 14:39:49</td>
+                                    <td>
+                                        <button data-url="http://bike.e-stronger.com/bike/admin/index.php?route=operation/violation/info&amp;parking_id=26" type="button" class="btn btn-info link"><i class="fa fa-fw fa-eye"></i>查看</button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <!--<td><input type="checkbox" name="selected[]" value="25"></td>-->
+                                    <td>816463</td>
+                                    <td>18681150579</td>
+                                    <td></td>
+                                    <td>其他上报</td>
+                                    <td>2017-03-22 19:24:39</td>
+                                    <td>
+                                        <button data-url="http://bike.e-stronger.com/bike/admin/index.php?route=operation/violation/info&amp;parking_id=25" type="button" class="btn btn-info link"><i class="fa fa-fw fa-eye"></i>查看</button>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>     
+</section>
+    <!-- /.content -->
+{% endblock %}
+
+{% block footer_js %}
+{{ parent() }}
+<script type="text/javascript">
+    $('.date-range').daterangepicker({
+        locale:{
+            format: 'YYYY-MM-DD',
+            isAutoVal:false,
+        }
+    });
+
+    $("#filter_type").change(function() {
+        $("#filter_text").attr("name", $(this).val());
+    });
+</script>
+{% endblock %}

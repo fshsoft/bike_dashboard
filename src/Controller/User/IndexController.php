@@ -19,8 +19,8 @@ use Bike\Dashboard\Controller\AbstractController;
 class IndexController extends AbstractController
 {
     /**
-     * @Route("/", name="user")
-     * @Template("BikeDashboardBundle:user:index.html.twig")
+     * @Route("/", name="user_list")
+     * @Template("BikeDashboardBundle:user/index:index.html.twig")
      */
     public function indexAction(Request $request)
     {
