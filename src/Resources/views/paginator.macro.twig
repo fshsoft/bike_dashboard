@@ -1,6 +1,6 @@
 {% macro paginate(currentPage, totalPage, middleSize, route, params, classes) %}
 <ul class="pagination pagination-sm no-margin {{ classes|join(' ') }}">
-{% set pages = bike_partner_paginate(currentPage, totalPage, middleSize) %}
+{% set pages = bike_dashboard_paginate(currentPage, totalPage, middleSize) %}
 {% set params = params | merge({p:'page'}) %}
 {% set uri = path(route, params) %}
 {% if pages.first %}

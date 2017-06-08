@@ -7,7 +7,7 @@
     <parameters>
         <parameter key="bike.dashboard.service.passport.class">Bike\Dashboard\Service\PassportService</parameter>
         <parameter key="bike.dashboard.service.admin.class">Bike\Dashboard\Service\AdminService</parameter>
-
+        <parameter key="bike.dashboard.service.user.class">Bike\Dashboard\Service\UserService</parameter>
     </parameters>
 
     <services>
@@ -21,6 +21,10 @@
                 <argument type="service" id="service_container"/>
             </call>
         </service>
-
+        <service id="bike.dashboard.service.user" class="%bike.dashboard.service.user.class%">
+            <call method="setContainer">
+                <argument type="service" id="service_container"/>
+            </call>
+        </service>
     </services>
 </container>

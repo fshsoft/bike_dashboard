@@ -1,0 +1,199 @@
+{% extends 'BikeDashboardBundle::layout.html.twig' %}
+
+{% block content %}
+    <!-- Content Header (Page header) -->
+<section class="content-header">
+    <h1>
+        消费记录
+        <small> order</small>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li class="active">用户管理</li>
+        <li >消费记录</li>
+    </ol>
+</section>
+<!-- Main content -->
+<section class="content">
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="nav-tabs-custom">
+                <!-- tab 标签 -->
+                <ul class="nav nav-tabs">
+                    <li class="active"><a href="javascript:;" data-toggle="tab">消费记录列表</a></li>
+                </ul>
+                <div class="tab-content">
+                    <div class="tab-pane active" id="bicycle">
+                        <form class="search_form" id="search_form" action="#" method="get">
+                            <!-- 搜索 -->
+                            <div class="dataTables_length fa-border" style="margin: 10px 0; padding: 10px">
+                                <select name="filter_type" id="filter_type" class="input-sm">
+                                    <option value="order_sn" selected="">订单sn</option>
+                                    <option value="lock_sn">锁sn</option>
+                                    <option value="bicycle_sn">单车sn</option>
+                                    <option value="user_name">手机号</option>
+                                    <option value="region_name">区域</option>
+                                </select>
+                                <input type="text" name="order_sn" value="" id="filter_text" class="input-sm" style="border: 1px solid #a9a9a9;">
+                                <select name="order_state" class="input-sm">
+                                    <option value="">状态</option>
+                                    <option value="-1">已取消</option>
+                                    <option value="0">未生效</option>
+                                    <option value="1">进行中</option>
+                                    <option value="2">已完成</option>
+                                </select>
+                                <input type="text" name="add_time" value="" class="input-sm date-range" style="border: 1px solid #a9a9a9;" placeholder="下单时间">
+
+                                <div class="pull-right">
+                                    <button type="submit" class="btn btn-primary btn-sm"><i class="fa fa-search"></i>&nbsp;搜索</button>
+                                </div>
+                            </div>
+                        </form>
+                        <div class="form-group">
+                            <button class="btn btn-default btn-sm" form="search_form" formmethod="post" formaction="#"><i class="fa fa-download"></i>&nbsp;导出</button>
+                        </div>
+                        <form id="table_form" class="table_form" method="post">
+                            <table class="table table-bordered table-hover dataTable" role="grid">
+                                <thead>
+                                <tr>
+                                    <th>订单sn</th>
+                                    <th>锁sn</th>
+                                    <th>单车sn</th>
+                                    <th>手机号</th>
+                                    <th>区域</th>
+                                    <th>状态</th>
+                                    <th>下单时间</th>
+                                    <th style="min-width:130px;">操作</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr>
+                                    <td>730543952616855433</td>
+                                    <td>063072620632</td>
+                                    <td>816463</td>
+                                    <td>13537027541</td>
+                                    <td>东莞市</td>
+                                    <td>未生效</td>
+                                    <td>2017-03-27 17:56:56</td>
+                                    <td>
+                                        <button data-url="#" type="button" class="btn btn-info link"><i class="fa fa-fw fa-eye"></i>查看</button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <!--<td><input type="checkbox" name="selected[]" value="3278"></td>-->
+                                    <td>520543952292349433</td>
+                                    <td>063072942572</td>
+                                    <td>273661</td>
+                                    <td>13537027541</td>
+                                    <td>东莞市</td>
+                                    <td>已取消</td>
+                                    <td>2017-03-27 17:51:32</td>
+                                   <td>
+                                        <button data-url="#" type="button" class="btn btn-info link"><i class="fa fa-fw fa-eye"></i>查看</button>
+                                    </td>
+                                </tr>
+                                                                <tr>
+                                    <!--<td><input type="checkbox" name="selected[]" value="3277"></td>-->
+                                    <td>150543952006094433</td>
+                                    <td>063072915404</td>
+                                    <td>120104</td>
+                                    <td>13537027541</td>
+                                    <td>湘潭市</td>
+                                    <td>已取消</td>
+                                    <td>2017-03-27 17:46:46</td>
+                                    <td>
+                                        <button data-url="#" type="button" class="btn btn-info link"><i class="fa fa-fw fa-eye"></i>查看</button>
+                                    </td>
+                                </tr>
+                                                                <tr>
+                                    <!--<td><input type="checkbox" name="selected[]" value="3276"></td>-->
+                                    <td>610543951717325060</td>
+                                    <td>063072620632</td>
+                                    <td>816463</td>
+                                    <td>18681150579</td>
+                                    <td>东莞市</td>
+                                    <td>已取消</td>
+                                    <td>2017-03-27 17:41:57</td>
+                                    <td>
+                                        <button data-url="#" type="button" class="btn btn-info link"><i class="fa fa-fw fa-eye"></i>查看</button>
+                                    </td>
+                                </tr>
+                                                                <tr>
+                                    <!--<td><input type="checkbox" name="selected[]" value="3275"></td>-->
+                                    <td>780543951557651060</td>
+                                    <td>063072620632</td>
+                                    <td>816463</td>
+                                    <td>18681150579</td>
+                                    <td>东莞市</td>
+                                    <td>已完成</td>
+                                    <td>2017-03-27 17:39:17</td>
+                                    <td>
+                                        <button data-url="#" type="button" class="btn btn-info link"><i class="fa fa-fw fa-eye"></i>查看</button>
+                                    </td>
+                                </tr>
+                                                                <tr>
+                                    <!--<td><input type="checkbox" name="selected[]" value="3274"></td>-->
+                                    <td>260543951492447060</td>
+                                    <td>063072620632</td>
+                                    <td>816463</td>
+                                    <td>18681150579</td>
+                                    <td>东莞市</td>
+                                    <td>已完成</td>
+                                    <td>2017-03-27 17:38:12</td>
+                                    <td>
+                                        <button data-url="#" type="button" class="btn btn-info link"><i class="fa fa-fw fa-eye"></i>查看</button>
+                                    </td>
+                                </tr>
+                                                                <tr>
+                                    <!--<td><input type="checkbox" name="selected[]" value="3273"></td>-->
+                                    <td>880543951381280433</td>
+                                    <td>063072942572</td>
+                                    <td>273661</td>
+                                    <td>13537027541</td>
+                                    <td>东莞市</td>
+                                    <td>已完成</td>
+                                    <td>2017-03-27 17:36:21</td>
+                                    <td>
+                                        <button data-url="#" type="button" class="btn btn-info link"><i class="fa fa-fw fa-eye"></i>查看</button>
+                                    </td>
+                                </tr>
+                                                                <tr>
+                                    <!--<td><input type="checkbox" name="selected[]" value="3272"></td>-->
+                                    <td>210543951262985060</td>
+                                    <td>063072620632</td>
+                                    <td>816463</td>
+                                    <td>18681150579</td>
+                                    <td>东莞市</td>
+                                    <td>已完成</td>
+                                    <td>2017-03-27 17:34:22</td>
+                                    <td>
+                                        <button data-url="#" type="button" class="btn btn-info link"><i class="fa fa-fw fa-eye"></i>查看</button>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>     
+</section>
+    <!-- /.content -->
+{% endblock %}
+
+{% block footer_js %}
+{{ parent() }}
+<script type="text/javascript">
+    $('.date-range').daterangepicker({
+        locale:{
+            format: 'YYYY-MM-DD',
+            isAutoVal:false,
+        }
+    });
+
+    $("#filter_type").change(function() {
+        $("#filter_text").attr("name", $(this).val());
+    });
+</script>
+{% endblock %}

@@ -1,0 +1,84 @@
+{% extends 'BikeDashboardBundle::layout.html.twig' %}
+
+{% block content %}
+    <!-- Content Header (Page header) -->
+<section class="content-header">
+    <h1>
+        系统消息
+        <small> message</small>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li class="active">用户管理</li>
+        <li >系统消息</li>
+    </ol>
+</section>
+<!-- Main content -->
+<section class="content">
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="nav-tabs-custom">
+                <!-- tab 标签 -->
+                <ul class="nav nav-tabs">
+                    <li class="active"><a href="javascript:;" data-toggle="tab">系统消息列表</a></li>
+                </ul>
+                <div class="tab-content">
+                    <div class="tab-pane active" id="bicycle">
+                        <div class="form-group">
+                            <a href="#" class="btn btn-primary btn-sm"><i class="fa fa-plus"></i>&nbsp;新增</a>
+                        </div>
+                        <form id="table_form" class="table_form" method="post">
+                            <table class="table table-bordered table-hover dataTable" role="grid">
+                                <thead>
+                                <tr>
+                                    <th>消息标题</th>
+                                    <th>用户</th>
+                                    <th>消息时间</th>
+                                    <th style="min-width:130px;">操作</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr>
+                                    <td>你高兴就好</td>
+                                    <td>18566514306</td>
+                                    <td>2017-03-22 16:59:47</td>
+                                    <td>
+                                        <div class="btn-group">
+                                            <button data-url="#" type="button" class="btn btn-info link"><i class="fa fa-fw fa-eye"></i>查看</button>
+                                            <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown">
+                                                <span class="caret"></span>
+                                                <span class="sr-only">Toggle Dropdown</span>
+                                            </button>
+                                            <ul class="dropdown-menu" role="menu">
+                                                <li><a href="#">删除</a></li>
+                                            </ul>
+                                        </div>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>     
+</section>
+    <!-- /.content -->
+{% endblock %}
+
+{% block footer_js %}
+{{ parent() }}
+<script type="text/javascript">
+    $('.date-range').daterangepicker({
+        locale:{
+            format: 'YYYY-MM-DD',
+            isAutoVal:false,
+        }
+    });
+
+    $("#filter_type").change(function() {
+        $("#filter_text").attr("name", $(this).val());
+    });
+</script>
+{% endblock %}

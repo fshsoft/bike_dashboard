@@ -1,0 +1,113 @@
+{% extends 'BikeDashboardBundle::layout.html.twig' %}
+
+{% block content %}
+    <!-- Content Header (Page header) -->
+<section class="content-header">
+    <h1>
+        实名验证
+        <small> identity</small>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li class="active">用户管理</li>
+        <li >实名验证</li>
+    </ol>
+</section>
+<!-- Main content -->
+<section class="content">
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="nav-tabs-custom">
+                <!-- tab 标签 -->
+                <ul class="nav nav-tabs">
+                    <li class="active"><a href="javascript:;" data-toggle="tab">实名验证记录</a></li>
+                </ul>
+                <div class="tab-content">
+                    <div class="tab-pane active" id="bicycle">
+                        <form class="search_form" id="search_form" action="#" method="get">
+                            <!-- 搜索 -->
+                            <div class="dataTables_length fa-border" style="margin: 10px 0; padding: 10px">
+                                <select name="filter_type" id="filter_type" class="input-sm">
+                                    <option value="il_user_mobile" selected="">手机号</option>
+                                    <option value="il_real_name">真实姓名</option>
+                                    <option value="il_identification">身份证</option>
+                                    <option value="il_verify_error_desc">结果描述</option>
+                                </select>
+                                <input type="text" name="il_user_mobile" value="" id="filter_text" class="input-sm" style="border: 1px solid #a9a9a9;">
+                                <select name="il_has_photo" class="input-sm">
+                                    <option value="">是否有返照</option>
+                                    <option value="1">是</option>
+                                    <option value="0">否</option>
+                                </select>
+                                <select name="il_verify_state" class="input-sm">
+                                    <option value="">认证结果</option>
+                                    <option value="1">通过</option>
+                                    <option value="0">不通过</option>
+                                </select>
+                                <select name="il_charged" class="input-sm">
+                                    <option value="">是否已扣费</option>
+                                    <option value="1">是</option>
+                                    <option value="0">否</option>
+                                </select>
+                                <input type="text" name="il_cert_time" value="" class="input-sm date-range" style="border: 1px solid #a9a9a9;" placeholder="提交时间">
+
+                                <div class="pull-right">
+                                    <button type="submit" class="btn btn-primary btn-sm"><i class="fa fa-search"></i>&nbsp;搜索</button>
+                                </div>
+                            </div>
+                        </form>
+                        <div class="form-group">
+                            <button class="btn btn-default btn-sm" form="search_form" formmethod="post" formaction="#"><i class="fa fa-download"></i>&nbsp;导出</button>
+                        </div>
+                        <form id="table_form" class="table_form" method="post">
+                            <table class="table table-bordered table-hover dataTable" role="grid">
+                                <thead>
+                                <tr>
+                                    <th>手机号</th>
+                                    <th>真实名字</th>
+                                    <th>身份证</th>
+                                    <th>提交时间</th>
+                                    <th>是否有返照</th>
+                                    <th>认证结果</th>
+                                    <th>结果描述</th>
+                                    <th>是否已扣费</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr>
+                                    <td>18625528649</td>
+                                    <td>张明杰</td>
+                                    <td>410221198708043037</td>
+                                    <td>2017-03-27 16:03:51</td>
+                                    <td>否</td>
+                                    <td>通过</td>
+                                    <td>认证通过</td>
+                                    <td>是</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>     
+</section>
+    <!-- /.content -->
+{% endblock %}
+
+{% block footer_js %}
+{{ parent() }}
+<script type="text/javascript">
+    $('.date-range').daterangepicker({
+        locale:{
+            format: 'YYYY-MM-DD',
+            isAutoVal:false,
+        }
+    });
+
+    $("#filter_type").change(function() {
+        $("#filter_text").attr("name", $(this).val());
+    });
+</script>
+{% endblock %}

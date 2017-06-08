@@ -4,13 +4,13 @@
     <!-- Content Header (Page header) -->
 <section class="content-header">
     <h1>
-        用户管理
-        <small>list</small>
+        用户信用
+        <small>credit</small>
     </h1>
     <ol class="breadcrumb">
         <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
         <li class="active">用户管理</li>
-        <li >用户列表</li>
+        <li >信用记录</li>
     </ol>
 </section>
 <!-- Main content -->
@@ -20,11 +20,11 @@
             <div class="nav-tabs-custom">
                 <!-- tab 标签 -->
                 <ul class="nav nav-tabs">
-                    <li class="active"><a href="javascript:;" data-toggle="tab">用户列表</a></li>
+                    <li class="active"><a href="javascript:;" data-toggle="tab">信用记录</a></li>
                 </ul>
                 <div class="tab-content">
                     <div class="tab-pane active" id="bicycle">
-                        <form class="search_form" id="search_form" action="{{ path('user_list') }}" method="get">
+                        <form class="search_form" id="search_form" action="#" method="get">
                             <!-- 搜索 -->
                             <div class="dataTables_length fa-border" style="margin: 10px 0; padding: 10px">
                                 <select name="filter_type" id="filter_type" class="input-sm">
@@ -47,36 +47,23 @@
                                 <thead>
                                 <tr>
                                     <th>手机号码</th>
-                                    <th>押金(元)</th>
-                                    <th>可用金额(元)</th>
-                                    <th>信用积分</th>
+                                    <th>积分值</th>
+                                    <th>积分描述</th>
+                                    <th>管理员描述</th>
                                     <th>注册时间</th>
-                                    <th style="min-width:130px;">操作</th>
                                 </tr>
                                 </thead>
                                 <tbody>
-{% for v in list.user %}
                                 <tr>
-                                    <!--<td><input type="checkbox" name="selected[]" value="878"></td>-->
-                                    <td>{{ v.getMobile() }}</td>
-                                    <td>99.00</td>
-                                    <td>99.00</td>
+                                    <td>18992658529</td>
                                     <td>100</td>
-                                    <td>{{ v.getCreate_time()|date('Y-m-d H:i:s') }}</td>
-                                    <td>
-                                        <button data-url="#" type="button" class="btn btn-info link"><i class="fa fa-fw fa-eye"></i>查看</button>
-                                    </td>
+                                    <td>注册完成</td>
+                                    <td>良好</td>
+                                    <td>2017-03-27 19:46:09</td>
                                 </tr>
-{% endfor %}
                                 </tbody>
                             </table>
                         </form>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-xs-12">
-                    {% import 'BikeDashboardBundle::paginator.macro.twig' as paginator %}
-                    {{ paginator.paginate(page, totalPage, 5, 'user_list', app.request.query.all(), ['pull-right']) }}
                     </div>
                 </div>
             </div>
@@ -95,6 +82,7 @@
             isAutoVal:false,
         }
     });
+
     $("#filter_type").change(function() {
         $("#filter_text").attr("name", $(this).val());
     });

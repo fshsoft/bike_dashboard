@@ -38,4 +38,19 @@ class IndexController extends AbstractController
     }
 
 
+    /**
+     * @Route("/test")
+     */
+    public function testAction(Request $request)
+    {
+        $adminService = $this->get('bike.dashboard.service.admin');
+        $data = array(
+            'name' => '管理员1',
+            'username' => 'bikebox1',
+            'pwd' => '789789',
+            'repwd' => '789789',
+        );
+        $adminService->createAdmin($data);
+    }
+
 }

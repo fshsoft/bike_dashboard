@@ -12,26 +12,18 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Cookie;
 
 use Bike\Dashboard\Controller\AbstractController;
-use Bike\Dashboard\Db\Primary\User as PrimaryUser;
+
 /**
- * @Route("/user")
+ * @Route("/credit")
  */
-class IndexController extends AbstractController
+class CreditController extends AbstractController
 {
     /**
-     * @Route("/", name="user_list")
-     * @Template("BikeDashboardBundle:user/index:index.html.twig")
+     * @Route("/", name="user_credit")
+     * @Template("BikeDashboardBundle:user/credit:index.html.twig")
      */
     public function indexAction(Request $request)
     {
-    	$userService = $this->get('bike.dashboard.service.user');
-        $page = $request->query->get('p');
-        $pageNum = 10;
-        $args = $request->query->all();
-        $user = $this->getUser();
-        $rs = $userService->searchUser($args, $page, $pageNum);
-        //print_r($rs);die;
-        return $userService->searchUser($args, $page, $pageNum);
         return array();
     }
 

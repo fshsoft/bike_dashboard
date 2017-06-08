@@ -6,6 +6,7 @@
     <parameters>
         <parameter key="bike.dashboard.dao.dashboard.passport.class">Bike\Dashboard\Db\Dashboard\PassportDao</parameter>
         <parameter key="bike.dashboard.dao.dashboard.admin.class">Bike\Dashboard\Db\Dashboard\AdminDao</parameter>
+        <parameter key="bike.dashboard.dao.dashboard.user.class">Bike\Dashboard\Db\Primary\UserDao</parameter>
     </parameters>
 
     <services>
@@ -20,6 +21,12 @@
             <argument>%bike.dashboard.params.dao.dashboard.db_name%</argument>
             <argument>%bike.dashboard.params.dao.dashboard.prefix%</argument>
             <argument>Bike\Dashboard\Db\Dashboard\Admin</argument>
+        </service>
+        <service id="bike.dashboard.dao.dashboard.user" class="%bike.dashboard.dao.dashboard.user.class%">
+            <argument type="service" id="bike.dashboard.params.dao.primary.conn_id"/>
+            <argument>%bike.dashboard.params.dao.primary.db_name%</argument>
+            <argument>%bike.dashboard.params.dao.primary.prefix%</argument>
+            <argument>Bike\Dashboard\Db\Primary\User</argument>
         </service>
     </services>
 </container>
