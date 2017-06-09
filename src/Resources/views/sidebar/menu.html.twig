@@ -104,8 +104,8 @@
             </span>
           </a>
           <ul class="treeview-menu">
-            <li><a href="#"><i class="fa fa-circle-o"></i> 使用说明分类型</a></li>
-            <li><a href="#"><i class="fa fa-circle-o"></i> 使用说明文档管理</a></li>
+            <li><a href="{{ path('article_list') }}"><i class="fa fa-circle-o"></i> 使用说明分类型</a></li>
+            <li><a href="{{ path('article_category') }}"><i class="fa fa-circle-o"></i> 使用说明文档管理</a></li>
           </ul>
         </li>
 
@@ -117,10 +117,11 @@
             </span>
           </a>
           <ul class="treeview-menu">
-            <li><a href="#"><i class="fa fa-circle-o"></i> 管理员管理</a></li>
-            <li><a href="#"><i class="fa fa-circle-o"></i> 运营设置</a></li>
-            <li><a href="#"><i class="fa fa-circle-o"></i> 版本管理</a></li>
-            <li><a href="#"><i class="fa fa-circle-o"></i> 操作日志</a></li>
+            <li><a href="{{ path('system_admin') }}"><i class="fa fa-circle-o"></i> 管理员管理</a></li>
+            <li><a href="{{ path('system_role') }}"><i class="fa fa-circle-o"></i> 角色管理</a></li>
+            <li><a href="{{ path('system_operator') }}"><i class="fa fa-circle-o"></i> 运营设置</a></li>
+            <li><a href="{{ path('system_version') }}"><i class="fa fa-circle-o"></i> 版本管理</a></li>
+            <li><a href="{{ path('system_log') }}"><i class="fa fa-circle-o"></i> 操作日志</a></li>
           </ul>
         </li>
 

@@ -1,0 +1,129 @@
+{% extends 'BikeDashboardBundle::layout.html.twig' %}
+
+{% block content %}
+    <!-- Content Header (Page header) -->
+<section class="content-header">
+    <h1>
+        操作日志
+        <small> log</small>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li class="active">系统设置</li>
+        <li >操作日志</li>
+    </ol>
+</section>
+<!-- Main content -->
+<section class="content">
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="nav-tabs-custom">
+                <!-- tab 标签 -->
+                <ul class="nav nav-tabs">
+                    <li class="active"><a href="javascript:;" data-toggle="tab">操作日志列表</a></li>
+                </ul>
+                <div class="tab-content">
+                    <div class="tab-pane active" id="bicycle">
+                        <!-- 新增 -->
+                        <div class="form-group">
+                            <button class="btn btn-default btn-sm" form="table_form" formaction="#"><i class="fa fa-download"></i>&nbsp;导出</button>
+                        
+                        </div>
+                        <form id="table_form" class="table_form" method="post">
+                            <table class="table table-bordered table-hover dataTable" role="grid">
+                                <thead>
+                                <tr>
+                                   <th>管理员</th>
+                                    <th>操作内容</th>
+                                    <th>操作ip</th>
+                                    <th>操作时间</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr>
+                                    <td>admin</td>
+                                    <td>添加优惠券：</td>
+                                    <td>116.18.22.234</td>
+                                    <td>2017-03-27 17:17:33</td>
+                                </tr>
+                                                                <tr>
+                                    <td>admin</td>
+                                    <td>添加优惠券：</td>
+                                    <td>116.18.22.234</td>
+                                    <td>2017-03-27 17:17:18</td>
+                                </tr>
+                                                                <tr>
+                                    <td>admin</td>
+                                    <td>添加优惠券：</td>
+                                    <td>116.18.22.234</td>
+                                    <td>2017-03-27 17:16:28</td>
+                                </tr>
+                                                                <tr>
+                                    <td>admin</td>
+                                    <td>编辑角色：合伙人管理员</td>
+                                    <td>116.18.22.234</td>
+                                    <td>2017-03-27 17:09:26</td>
+                                </tr>
+                                                                <tr>
+                                    <td>admin</td>
+                                    <td>编辑角色：合伙人管理员</td>
+                                    <td>116.18.22.234</td>
+                                    <td>2017-03-27 17:09:11</td>
+                                </tr>
+                                                                <tr>
+                                    <td>admin</td>
+                                    <td>添加优惠券：</td>
+                                    <td>116.18.22.234</td>
+                                    <td>2017-03-27 16:19:45</td>
+                                </tr>
+                                                                <tr>
+                                    <td>admin</td>
+                                    <td>添加优惠券：</td>
+                                    <td>116.18.22.234</td>
+                                    <td>2017-03-27 16:19:30</td>
+                                </tr>
+                                                                <tr>
+                                    <td>admin</td>
+                                    <td>添加优惠券：</td>
+                                    <td>116.18.22.234</td>
+                                    <td>2017-03-27 16:17:35</td>
+                                </tr>
+                                                                <tr>
+                                    <td>admin</td>
+                                    <td>添加优惠券：</td>
+                                    <td>116.18.22.234</td>
+                                    <td>2017-03-27 16:15:06</td>
+                                </tr>
+                                                                <tr>
+                                    <td>admin</td>
+                                    <td>添加优惠券：</td>
+                                    <td>116.18.22.234</td>
+                                    <td>2017-03-27 16:13:03</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>     
+</section>
+    <!-- /.content -->
+{% endblock %}
+
+{% block footer_js %}
+{{ parent() }}
+<script type="text/javascript">
+    $('.date-range').daterangepicker({
+        locale:{
+            format: 'YYYY-MM-DD',
+            isAutoVal:false,
+        }
+    });
+
+    $("#filter_type").change(function() {
+        $("#filter_text").attr("name", $(this).val());
+    });
+</script>
+{% endblock %}

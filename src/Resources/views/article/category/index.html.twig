@@ -4,13 +4,13 @@
     <!-- Content Header (Page header) -->
 <section class="content-header">
     <h1>
-        管理员
-        <small> admin</small>
+        文章分类
+        <small> category</small>
     </h1>
     <ol class="breadcrumb">
         <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-        <li class="active">系统设置</li>
-        <li >管理员</li>
+        <li class="active">使用说明</li>
+        <li >文章分类</li>
     </ol>
 </section>
 <!-- Main content -->
@@ -20,54 +20,26 @@
             <div class="nav-tabs-custom">
                 <!-- tab 标签 -->
                 <ul class="nav nav-tabs">
-                    <li class="active"><a href="javascript:;" data-toggle="tab">管理员列表</a></li>
+                    <li class="active"><a href="javascript:;" data-toggle="tab">文章分类列表</a></li>
                 </ul>
                 <div class="tab-content">
                     <div class="tab-pane active" id="bicycle">
-                        <form class="search_form" id="search_form" action="#" method="get">
-                            <!-- 搜索 -->
-                            <div class="dataTables_length fa-border" style="margin: 10px 0; padding: 10px">
-                                <input type="text" name="admin_name" value="" class="input-sm" style="border: 1px solid #a9a9a9;" placeholder="用户名称">
-                                <select name="role_id" class="input-sm">
-                                    <option value="">角色</option>
-                                    <option value="1">管理员</option>
-                                    <option value="2">运维组</option>
-                                    <option value="8">合伙人管理员</option>
-                                    <option value="9">测试组</option>
-                                </select>
-                                <select name="state" class="input-sm">
-                                    <option value="">状态</option>
-                                    <option value="0">禁用</option>
-                                    <option value="1">启用</option>
-                                </select>
-                                <div class="pull-right">
-                                    <button type="submit" class="btn btn-primary btn-sm"><i class="fa fa-search"></i>&nbsp;搜索</button>
-                                </div>
-                            </div>
-                        </form>
-                        <!-- 新增 -->
                         <div class="form-group">
                             <a href="#" class="btn btn-primary btn-sm"><i class="fa fa-plus"></i>&nbsp;新增</a>
-                        
                         </div>
                         <form id="table_form" class="table_form" method="post">
                             <table class="table table-bordered table-hover dataTable" role="grid">
                                 <thead>
                                 <tr>
-                                    <th>用户名称</th>
-                                    <th>角色</th>
-                                    <th>最后登录时间</th>
-                                    <th>状态</th>
+                                    <th>分类名称</th>
+                                    <th>排序</th>
                                     <th style="min-width:130px;">操作</th>
                                 </tr>
                                 </thead>
                                 <tbody>
                                 <tr>
-                                    <!--<td><input type="checkbox" name="selected[]" value="1"></td>-->
-                                    <td>bikebox</td>
-                                    <td>管理员</td>
-                                    <td>2017-06-09 19:49:19</td>
-                                    <td>启用</td>
+                                    <td>帮助文档</td>
+                                    <td>1</td>
                                     <td>
                                         <div class="btn-group">
                                             <button data-url="#" type="button" class="btn btn-info link"><i class="fa fa-fw fa-pencil"></i>编辑</button>
@@ -102,7 +74,6 @@
             isAutoVal:false,
         }
     });
-
     $("#filter_type").change(function() {
         $("#filter_text").attr("name", $(this).val());
     });

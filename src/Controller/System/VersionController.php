@@ -1,6 +1,6 @@
 <?php
 
-namespace Bike\Dashboard\Controller\Article;
+namespace Bike\Dashboard\Controller\System;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
@@ -14,17 +14,20 @@ use Symfony\Component\HttpFoundation\Cookie;
 use Bike\Dashboard\Controller\AbstractController;
 
 /**
- * @Route("/article")
+ * @Route("/version")
  */
-class IndexController extends AbstractController
+class VersionController extends AbstractController
 {
     /**
-     * @Route("/", name="article_list")
-     * @Template("BikeDashboardBundle:article/index:index.html.twig")
+     * @Route("/", name="system_version")
+     * @Template("BikeDashboardBundle:system/version:index.html.twig")
      */
     public function indexAction(Request $request)
     {
         return array();
     }
+
+  
+
 
 }

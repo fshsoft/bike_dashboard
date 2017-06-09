@@ -19,7 +19,7 @@ use Bike\Dashboard\Controller\AbstractController;
 class IndexController extends AbstractController
 {
     /**
-     * @Route("/", name="system")
+     * @Route("/", name="system_admin")
      * @Template("BikeDashboardBundle:system/index:index.html.twig")
      */
     public function indexAction(Request $request)
