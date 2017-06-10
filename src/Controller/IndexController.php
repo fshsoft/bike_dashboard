@@ -10,8 +10,8 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Cookie;
-use Bike\Dashboard\Db\Dashboard\Passport;
 
+use Bike\Dashboard\Db\Primary\AdminDao;
 
 /**
  * @Route("/")
@@ -37,7 +37,6 @@ class IndexController extends AbstractController
         return array();
     }
 
-
     /**
      * @Route("/test")
      */
@@ -45,12 +44,22 @@ class IndexController extends AbstractController
     {
         $adminService = $this->get('bike.dashboard.service.admin');
         $data = array(
-            'name' => '管理员1',
-            'username' => 'bikebox1',
+            'name' => '运维管理员',
+            'username' => 'bike_operator',
             'pwd' => '789789',
             'repwd' => '789789',
         );
         $adminService->createAdmin($data);
     }
 
+    public function listAction(Request $request)
+    {
+        $adminService = $this->get('bike.dashboard.service.admin');
+        $page = $request->query->get('p');
+        $pageNum = 10;
+        $args = $request->query->all();
+        $rs = $adminService->searchAdmin($args, $page, $pageNum);
+        return $adminService->searchAdmin($args, $page, $pageNum);
+        return array();
+    }
 }

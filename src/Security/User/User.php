@@ -4,32 +4,33 @@ namespace Bike\Dashboard\Security\User;
 
 use Symfony\Component\Security\Core\User\UserInterface;
 
-use Bike\Dashboard\Db\Dashboard\Passport;
+use Bike\Dashboard\Db\Primary\Admin;
 
-class User extends Passport implements UserInterface
+
+class User extends Admin implements UserInterface
 {
 
-    protected $roleMap = array(
-        Passport::TYPE_ADMIN => 'ROLE_ADMIN'
-    );
+    // protected $roleMap = array(
+    //     Admin::TYPE_ADMIN => 'ROLE_ADMIN'
+    // );
 
-     public function getId()
+    public function getId()
     {
         return $this->getCol('id');
     }
 
-    public function getType()
-    {
-        return $this->getCol('type');
-    }
+    // public function getType()
+    // {
+    //     return $this->getCol('type');
+    // }
 
-    public function getRole()
-    {
-        $type = $this->getCol('type');
-        if (isset($this->roleMap[$type])) {
-            return $this->roleMap[$type];
-        }
-    }
+    // public function getRole()
+    // {
+    //     $type = $this->getCol('type');
+    //     if (isset($this->roleMap[$type])) {
+    //         return $this->roleMap[$type];
+    //     }
+    // }
 
     public function getRoles()
     {
@@ -53,6 +54,11 @@ class User extends Passport implements UserInterface
     public function getUsername()
     {
         return $this->getCol('username');
+    }
+
+    public function getName()
+    {
+        return $this->getCol('name');
     }
 
     public function eraseCredentials()

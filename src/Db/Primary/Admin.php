@@ -1,23 +1,20 @@
 <?php
 
-namespace Bike\Dashboard\Db\Dashboard;
+namespace Bike\Dashboard\Db\Primary;
 
 use Bike\Dashboard\Db\AbstractEntity;
 
-class Passport extends AbstractEntity
+class Admin extends AbstractEntity
 {
-    const TYPE_ADMIN = 1;
-
-
     protected static $pk = 'id';
 
     protected static $cols = array(
         'id' => null,
         'username' => null,
+        'name' => null,
         'pwd' => null,
-        'role' => null,
-        'last_login_ip' => null,
-        'last_login_time' => null,
+        'last_login_ip' => '',
+        'last_login_time' => 0,
         'create_time' => null,
     );
 }

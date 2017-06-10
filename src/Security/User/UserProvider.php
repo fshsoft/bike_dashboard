@@ -14,12 +14,12 @@ class UserProvider implements UserProviderInterface
 
     public function loadUserByUsername($username)
     {
-        $passportService = $this->container->get('bike.dashboard.service.passport');
-        $passport = $passportService->getPassportByUsername($username);
+        $adminService = $this->container->get('bike.dashboard.service.admin');
+        $admin = $adminService->getAdminByUsername($username);
 
-        if ($passport) {
+        if ($admin) {
             $user = new User();
-            $user->fromArray($passport->toArray());
+            $user->fromArray($admin->toArray());
             return $user;
         }
 

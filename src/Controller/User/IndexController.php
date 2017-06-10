@@ -35,7 +35,27 @@ class IndexController extends AbstractController
         return array();
     }
 
-  
+    /**
+     * @Route("/edit/{id}", name="user_edit")
+     * @Template("BikeDashboardBundle:user/index:edit.html.twig")
+     */
+    public function editAction(Request $request,$id)
+    {
+        $userService = $this->get('bike.dashboard.service.user');
+        if ($request->isMethod('post')) {
+            $data = $request->request->all();
+            try {
+                $userService->editUser($id,$data);
+                return $this->jsonSuccess();
+            } catch (\Exception $e) {
+                return $this->jsonError($e);
+            }
+        } else {
+            $user = $userService->getUser($id);
+            return ['user'=>$user];
+        }
+        return array();
+    } 
 
 
 }

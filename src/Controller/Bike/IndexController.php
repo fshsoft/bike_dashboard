@@ -26,13 +26,6 @@ class IndexController extends AbstractController
     public function indexAction(Request $request)
     {
 
-    	$passportService = $this->get('bike.dashboard.service.passport');
-    	//$list = $passportService->getPassport(1);
-    	$user = $this->getUser();
-        $session = $request->getSession();
-        //print_r($user);
-    	//print_r($list);
-    	//print_r($passportService);
         return array();
     }
 

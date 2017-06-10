@@ -1,6 +1,6 @@
 <?php
 
-namespace Bike\Dashboard\Db\Dashboard;
+namespace Bike\Dashboard\Db\Primary;
 
 use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\Query\QueryBuilder;
@@ -8,28 +8,24 @@ use Doctrine\DBAL\Query\QueryBuilder;
 use Bike\Dashboard\Db\AbstractDao;
 use Bike\Dashboard\Util\ArgUtil;
 
-class PassportDao extends AbstractDao
+class AdminDao extends AbstractDao
 {
     protected function parseTable($cond, $dbOp)
     {
-        return "`{$this->db}`.`{$this->prefix}passport`";
+        return "`{$this->db}`.`{$this->prefix}admin`";
     }
 
     protected function applyWhere(QueryBuilder $qb, array $where, $dbOp)
     {
         $where = ArgUtil::getArgs($where, array(
-            'id.in',
             'username',
-            'type',
+            'id.in',
         ));
-        if ($where['id.in']) {
-            $qb->andWhere('id IN (' . $qb->createNamedParameter($where['id.in'], Connection::PARAM_INT_ARRAY) . ')');
-        }
         if ($where['username']) {
             $qb->andWhere('username = ' . $qb->createNamedParameter($where['username']));
         }
-        if ($where['type']) {
-            $qb->andWhere('type = ' . $qb->createNamedParameter($where['type']));
+        if ($where['id.in']) {
+            $qb->andWhere('id IN (' . $qb->createNamedParameter($where['id.in'], Connection::PARAM_INT_ARRAY) . ')');
         }
     }
 

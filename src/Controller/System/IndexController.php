@@ -24,10 +24,68 @@ class IndexController extends AbstractController
      */
     public function indexAction(Request $request)
     {
+        $adminService = $this->get('bike.dashboard.service.admin');
+        $page = $request->query->get('p');
+        $pageNum = 10;
+        $args = $request->query->all();
+        $rs = $adminService->searchAdmin($args, $page, $pageNum);
+        //print_r($rs);die;
+        return $adminService->searchAdmin($args, $page, $pageNum);
         return array();
     }
 
-  
+    /**
+     * @Route("/new", name="admin_new")
+     * @Template("BikeDashboardBundle:system/index:new.html.twig")
+     */
+    public function newAction(Request $request)
+    {
+        if ($request->isMethod('post')) {
+            $data = $request->request->all();
+            $adminService = $this->get('bike.dashboard.service.admin');
+            try {
+                $adminService->createAdmin($data);
+                return $this->jsonSuccess();
+            } catch (\Exception $e) {
+                return $this->jsonError($e);
+            }
+        }
+        return array();
+    }
+
+    /**
+     * @Route("/edit/{id}", name="admin_edit")
+     * @Template("BikeDashboardBundle:system/index:edit.html.twig")
+     */
+    public function editAction(Request $request,$id)
+    {
+        $adminService = $this->get('bike.dashboard.service.admin');
+        if ($request->isMethod('post')) {
+            $data = $request->request->all();
+            try {
+                $adminService->editAdmin($id,$data);
+                return $this->jsonSuccess();
+            } catch (\Exception $e) {
+                return $this->jsonError($e);
+            }
+        } else {
+            $admin = $adminService->getAdmin($id);
+            $passportService = $this->container->get('bike.dashboard.service.passport');
+            $passport = $passportService->getPassport($id);
+            return ['admin'=>$admin,'passport'=>$passport];
+        }
+        return array();
+    }
+
+    /**
+     * @Route("/del", name="admin_del")
+     * 
+     */
+    public function delAction(Request $request)
+    {
+        
+        return array();
+    }
 
 
 }

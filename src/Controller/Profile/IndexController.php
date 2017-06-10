@@ -37,9 +37,7 @@ class IndexController extends AbstractController
             }
         } else {
             $admin = $adminService->getAdmin($id);
-            $passportService = $this->container->get('bike.dashboard.service.passport');
-            $passport = $passportService->getPassport($id);
-            return ['admin'=>$admin,'passport'=>$passport];
+            return ['admin'=>$admin];
         }
         return array();
     }

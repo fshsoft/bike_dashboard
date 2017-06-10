@@ -6,92 +6,49 @@ use Bike\Dashboard\Exception\Debug\DebugException;
 use Bike\Dashboard\Exception\Logic\LogicException;
 use Bike\Dashboard\Service\AbstractService;
 use Bike\Dashboard\Util\ArgUtil;
-use Bike\Dashboard\Db\Dashboard\Admin;
-use Bike\Dashboard\Db\Dashboard\Passport;
+use Bike\Dashboard\Db\Primary\AdminDao;
 
 class AdminService extends AbstractService
 {
+
     public function createAdmin(array $data)
     {
         $data = ArgUtil::getArgs($data, array(
-            'name',
             'username',
+            'name',
             'pwd',
             'repwd',
+            'create_time',
         ));
-        $data['type'] = Passport::TYPE_ADMIN;
-
-        $this->validateName($data['name']);
-        $adminDao = $this->getAdminDao();
-        $adminConn = $adminDao->getConn();
-        $passportService = $this->container->get('bike.dashboard.service.passport');
-        $passportDao = $this->container->get('bike.dashboard.dao.dashboard.passport');
-        $passportConn = $passportDao->getConn();
-        $adminConn->beginTransaction();
-        $passportConn->beginTransaction();
-        try {
-            $passportId = $passportService->createPassport($data);
-            $admin = new Admin($data);
-            $admin->setId($passportId);
-            $adminDao->create($admin);
-
-            $passportConn->commit();
-            $adminConn->commit();
-        } catch (\Exception $e) {
-            $passportConn->rollBack();
-            $adminConn->rollBack();
-            throw $e;
+        $this->validateUsername($data['username']);
+        $this->validatePassword($data['pwd'], $data['repwd']);
+        if (!$data['create_time']) {
+            $data['create_time'] = time();
         }
+        $data['pwd'] = $this->hashPassword($data['pwd']);
+        $adminDao = $this->getPrimaryAdminDao();
+        return $adminDao->create($data, true);
     }
 
-
-    public function editAdmin($id, array $data)
+    public function editAdmin($id,array $data)
     {
         $data = ArgUtil::getArgs($data, array(
-            'name',
             'username',
             'pwd',
             'repwd',
+            'name',
         ));
-        $data['type'] = Passport::TYPE_ADMIN;
-        $data['id'] = $id;
+        $this->validateUsername($data['username'],$id);
 
-        $this->validateName($data['name']);
-        $adminDao = $this->getAdminDao();
-        $adminConn = $adminDao->getConn();
-        $passportService = $this->container->get('bike.dashboard.service.passport');
-        $passportDao = $this->container->get('bike.dashboard.dao.dashboard.passport');
-        $passportConn = $passportDao->getConn();
-        $adminConn->beginTransaction();
-        $passportConn->beginTransaction();
-        try {
-            $passportService->updatePassport($id,$data);
-            $admin = new Admin($data);
-            $adminDao->save($admin);
-
-            $passportConn->commit();
-            $adminConn->commit();
-        } catch (\Exception $e) {
-            $passportConn->rollBack();
-            $adminConn->rollBack();
-            throw $e;
-        }   
-
-    }
-
-
-    public function getAdmin($id)
-    {
-        $key = 'admin.' . $id;
-        $admin = $this->getRequestCache($key);
-        if (!$admin) {
-            $adminDao = $this->getAdminDao();
-            $admin = $adminDao->find($id);
-            if ($admin) {
-                $this->setRequestCache($key, $admin);
-            }
+        if ($data['pwd']) {
+            $this->validatePassword($data['pwd'], $data['repwd']);    
+            $data['pwd'] = $this->hashPassword($data['pwd']);
+        } else {
+            unset($data['pwd']);
         }
-        return $admin;
+        $adminDao = $this->getPrimaryAdminDao();
+        return $adminDao->update($id,$data);        
+
     }
 
     public function searchAdmin(array $args, $page, $pageNum)
@@ -105,21 +62,9 @@ class AdminService extends AbstractService
             $pageNum = 1;
         }
         $offset = ($page - 1) * $pageNum;
-        $adminDao = $this->getAdminDao();
+        $adminDao = $this->getPrimaryAdminDao();
         $adminList = $adminDao->findList('*', $args, $offset, $pageNum);
-        if ($adminList) {
-            $passportIds = array();
-            foreach ($adminList as $v) {
-                $passportIds[] = $v->getId();
-            }
-            $passportDao = $this->container->get('bike.dashboard.dao.dashboard.passport');
-            $passportMap = $passportDao->findMap('', array(
-                'id.in' => $passportIds,
-            ), 0, 0);
-        } else {
-            $passportMap = array();
-            $adminList = array();
-        }
+        //print_r($adminList);die;
         $total = $adminDao->findNum($args);
         if ($total) {
             $totalPage = ceil($total / $pageNum);
@@ -130,7 +75,6 @@ class AdminService extends AbstractService
             $totalPage = 1;
             $page = 1;
         }
-
         return array(
             'page' => $page,
             'totalPage' => $totalPage,
@@ -139,22 +83,100 @@ class AdminService extends AbstractService
             'list' => array(
                 'admin' => $adminList,
             ),
-            'map' => array(
-                'passport' => $passportMap,
-            ),
         );
     }
 
-    public function getAllPrivilegeListByPassportId($id)
+    public function getAdmin($id)
     {
-        $adminPrivilegeDao = $this->container->get('bike.dashboard.dao.dashboard.admin_privilege');
-        $where = ['admin_id'=>$id];
-        $result = $adminPrivilegeDao->findList('*',$where,0,0);
-        if ($result) {
-            return $result;
+        $key = $this->getAdminRequestCacheKey('id', $id);
+        $admin = $this->getRequestCache($key);
+        if (!$admin) {
+            $adminDao = $this->getPrimaryAdminDao();
+            $admin = $adminDao->find($id);
+            if ($admin) {
+                $this->setAdminRequestCache($admin);
+            }
+        }
+        return $admin;
+    }
+
+    public function getAdminByUsername($username)
+    {
+        $key = $this->getAdminRequestCacheKey('username', $username);
+        $admin = $this->getRequestCache($key);
+        if (!$admin) {
+            $adminDao = $this->getPrimaryAdminDao();
+            $admin = $adminDao->find(array('username' => $username));
+            if ($admin) {
+                $this->setAdminRequestCache($admin);
+            }
+        }
+        return $admin;
+    }
+
+    public function hashPassword($password)
+    {
+        $options = [
+            'cost' => 10,
+        ];
+
+        return  password_hash($password, PASSWORD_BCRYPT, $options);
+    }
+
+    protected function setAdminRequestCache($admin)
+    {
+        $this->setRequestCache($this->getAdminRequestCacheKey('id', $admin->getId()), $admin);
+        $this->setRequestCache($this->getAdminRequestCacheKey('username', $admin->getUsername()), $admin);
+    }
+
+    protected function  getAdminRequestCacheKey($type, $value)
+    {
+        switch ($type) {
+            case 'id':
+            case 'username':
+                return 'admin.' . $type . '.' . $value;
+        }
+        throw new DebugException('非法的admin request cache key');
+    }
+
+    protected function validateUsername($username,$id = null)
+    {
+        if (!$username) {
+            throw new LogicException('用户名不能为空');
+        }
+        if (!preg_match('/^[a-zA-Z_][a-zA-Z0-9_]{5,18}/', $username)) {
+            throw new LogicException('用户名只能是字母，数字或者下划线，首字符不能为数字，长度为6-19个字符');
+        }
+        $admin = $this->getAdminByUsername($username);
+        if ($admin) {
+            if ($id !== null) {
+                if ($admin->getId() == $id ) {
+                    return true;
+                }
+            }
+            throw new LogicException('用户名已存在');
         }
     }
 
+    protected function validatePassword($password, $repassword = null)
+    {
+        if (!$password) {
+            throw new LogicException('密码不能为空');
+        }
+
+        $len = strlen($password);
+        if ($len < 6) {
+            throw new LogicException('密码长度最少6位');
+        } elseif ($len > 16) {
+            throw new LogicException('密码长度最多16位');
+        }
+
+        if ($repassword !== null) {
+            if ($password !== $repassword) {
+                throw new LogicException('两次输入的密码不一致');
+            }
+        }
+    }
 
     protected function validateName($name)
     {
@@ -167,8 +189,8 @@ class AdminService extends AbstractService
         }
     }
 
-    protected function getAdminDao()
+    protected function getPrimaryAdminDao()
     {
-        return $this->container->get('bike.dashboard.dao.dashboard.admin');
+        return $this->container->get('bike.dashboard.dao.primary.admin');
     }
 }

@@ -340,11 +340,13 @@
 })(jQuery, $.AdminLTE);
 
   var CURRENT_URL = window.location.href.split('?')[0],
+      $SIDEBAR_MENU = $('.sidebar-menu'),
+      CURRENT_URL_ARR= new Array(); 
   CURRENT_URL_ARR=CURRENT_URL.split("/",6); 
   for (i=0;i<CURRENT_URL_ARR.length ;i++ ){
     TEM_URL = CURRENT_URL_ARR.join(",");
     TEM_URL = TEM_URL.replace(/,/g,"/");
-    $('.sidebar-menu').find('a').filter(function () {
+    $SIDEBAR_MENU.find('a').filter(function () {
       return this.href ==TEM_URL+"/";
     }).parent('li').addClass('active').parent('ul').css("display","block").parent('li').addClass('active');
     CURRENT_URL_ARR.pop();

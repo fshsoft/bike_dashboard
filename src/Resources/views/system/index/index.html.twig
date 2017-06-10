@@ -32,8 +32,7 @@
                                     <option value="">角色</option>
                                     <option value="1">管理员</option>
                                     <option value="2">运维组</option>
-                                    <option value="8">合伙人管理员</option>
-                                    <option value="9">测试组</option>
+                                    <option value="3">测试组</option>
                                 </select>
                                 <select name="state" class="input-sm">
                                     <option value="">状态</option>
@@ -47,7 +46,7 @@
                         </form>
                         <!-- 新增 -->
                         <div class="form-group">
-                            <a href="#" class="btn btn-primary btn-sm"><i class="fa fa-plus"></i>&nbsp;新增</a>
+                            <a href="{{ path('admin_new') }}" class="btn btn-primary btn-sm"><i class="fa fa-plus"></i>&nbsp;新增</a>
                         
                         </div>
                         <form id="table_form" class="table_form" method="post">
@@ -62,28 +61,36 @@
                                 </tr>
                                 </thead>
                                 <tbody>
+{% for v in list.admin %}
                                 <tr>
                                     <!--<td><input type="checkbox" name="selected[]" value="1"></td>-->
-                                    <td>bikebox</td>
-                                    <td>管理员</td>
-                                    <td>2017-06-09 19:49:19</td>
+                                    <td>{{ v.getUsername() }}</td>
+                                    <td>{{ v.getName() }}</td>
+                                    <td>{{ v.getCreate_time|date('Y-m-d H:i:s') }}</td>
                                     <td>启用</td>
                                     <td>
                                         <div class="btn-group">
-                                            <button data-url="#" type="button" class="btn btn-info link"><i class="fa fa-fw fa-pencil"></i>编辑</button>
+                                            <button data-url="{{ path('admin_edit',{id:v.getId()}) }}" type="button" class="btn btn-info link"><i class="fa fa-fw fa-pencil"></i>编辑</button>
                                             <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown">
                                                 <span class="caret"></span>
                                                 <span class="sr-only">Toggle Dropdown</span>
                                             </button>
                                             <ul class="dropdown-menu" role="menu">
-                                                <li><a href="#">删除</a></li>
+                                                <li><a href="{{ path('admin_del',{id:v.getId()}) }}">删除</a></li>
                                             </ul>
                                         </div>
                                     </td>
                                 </tr>
+{% endfor %}
                                 </tbody>
                             </table>
                         </form>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12">
+                    {% import 'BikeDashboardBundle::paginator.macro.twig' as paginator %}
+                    {{ paginator.paginate(page, totalPage, 5, 'system_admin', app.request.query.all(), ['pull-right']) }}
                     </div>
                 </div>
             </div>

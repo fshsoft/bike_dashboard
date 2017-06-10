@@ -4,29 +4,15 @@
            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
     <parameters>
-        <parameter key="bike.dashboard.dao.dashboard.passport.class">Bike\Dashboard\Db\Dashboard\PassportDao</parameter>
-        <parameter key="bike.dashboard.dao.dashboard.admin.class">Bike\Dashboard\Db\Dashboard\AdminDao</parameter>
-        <parameter key="bike.dashboard.dao.dashboard.user.class">Bike\Dashboard\Db\Primary\UserDao</parameter>
+        <parameter key="bike.dashboard.dao.primary.admin.class">Bike\Dashboard\Db\Primary\AdminDao</parameter>
     </parameters>
 
     <services>
-        <service id="bike.dashboard.dao.dashboard.passport" class="%bike.dashboard.dao.dashboard.passport.class%">
-            <argument type="service" id="bike.dashboard.params.dao.dashboard.conn_id"/>
-            <argument>%bike.dashboard.params.dao.dashboard.db_name%</argument>
-            <argument>%bike.dashboard.params.dao.dashboard.prefix%</argument>
-            <argument>Bike\Dashboard\Db\Dashboard\Passport</argument>
-        </service>
-        <service id="bike.dashboard.dao.dashboard.admin" class="%bike.dashboard.dao.dashboard.admin.class%">
-            <argument type="service" id="bike.dashboard.params.dao.dashboard.conn_id"/>
-            <argument>%bike.dashboard.params.dao.dashboard.db_name%</argument>
-            <argument>%bike.dashboard.params.dao.dashboard.prefix%</argument>
-            <argument>Bike\Dashboard\Db\Dashboard\Admin</argument>
-        </service>
-        <service id="bike.dashboard.dao.dashboard.user" class="%bike.dashboard.dao.dashboard.user.class%">
+        <service id="bike.dashboard.dao.primary.admin" class="%bike.dashboard.dao.primary.admin.class%">
             <argument type="service" id="bike.dashboard.params.dao.primary.conn_id"/>
             <argument>%bike.dashboard.params.dao.primary.db_name%</argument>
             <argument>%bike.dashboard.params.dao.primary.prefix%</argument>
-            <argument>Bike\Dashboard\Db\Primary\User</argument>
+            <argument>Bike\Dashboard\Db\Primary\Admin</argument>
         </service>
     </services>
 </container>

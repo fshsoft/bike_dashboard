@@ -11,8 +11,7 @@
             </call>
             <tag name="twig.extension" />
         </service>
-
-        <service id="bike.dashboard.twig.extension.passport" class="Bike\Dashboard\Twig\PassportExtension" public="false">
+        <service id="bike.dashboard.twig.extension.admin" class="Bike\Dashboard\Twig\AdminExtension" public="false">
             <call method="setContainer">
                 <argument type="service" id="service_container"/>
             </call>
