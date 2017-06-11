@@ -46,6 +46,7 @@
                             <table class="table table-bordered table-hover dataTable" role="grid">
                                 <thead>
                                 <tr>
+                                    <th>姓名</th>
                                     <th>手机号码</th>
                                     <th>押金(元)</th>
                                     <th>可用金额(元)</th>
@@ -58,13 +59,14 @@
 {% for v in list.user %}
                                 <tr>
                                     <!--<td><input type="checkbox" name="selected[]" value="878"></td>-->
+                                    <td>{{ v.getName() }}</td>
                                     <td>{{ v.getMobile() }}</td>
                                     <td>99.00</td>
-                                    <td>99.00</td>
+                                    <td>{{ v.getBalance }}</td>
                                     <td>100</td>
                                     <td>{{ v.getCreate_time()|date('Y-m-d H:i:s') }}</td>
                                     <td>
-                                        <button data-url="" type="button" class="btn btn-info link"><i class="fa fa-fw fa-eye"></i>查看</button>
+                                        <a href="{{ path('user_edit',{id:v.getId()}) }}" class="btn btn-xs  btn-primary"><i class="fa fa-fw fa-edit"></i>编辑</a>
                                     </td>
                                 </tr>
 {% endfor %}

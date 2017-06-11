@@ -6,6 +6,7 @@ use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\Query\QueryBuilder;
 
 use Bike\Dashboard\Db\AbstractDao;
+use Bike\Dashboard\Util\ArgUtil;
 
 class UserDao extends AbstractDao
 {
@@ -16,7 +17,16 @@ class UserDao extends AbstractDao
 
     protected function applyWhere(QueryBuilder $qb, array $where, $dbOp)
     {
-
+        $where = ArgUtil::getArgs($where, array(
+            'id',
+            'mobile',
+        ));
+        if ($where['id']) {
+            $qb->andWhere('id = '. $qb->createNamedParameter($where['id']));
+        }
+        if ($where['mobile']) {
+            $qb->andWhere('mobile = ' . $qb->createNamedParameter($where['mobile']));
+        }
     }
 
     protected function applyOrder(QueryBuilder $qb, array $order)

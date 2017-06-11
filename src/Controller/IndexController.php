@@ -24,7 +24,6 @@ class IndexController extends AbstractController
      */
     public function indexAction(Request $request)
     {
-        //die("sss");
         return array();
     }
 
@@ -44,22 +43,12 @@ class IndexController extends AbstractController
     {
         $adminService = $this->get('bike.dashboard.service.admin');
         $data = array(
-            'name' => '运维管理员',
-            'username' => 'bike_operator',
+            'name' => '管理员',
+            'username' => 'bikebox',
             'pwd' => '789789',
             'repwd' => '789789',
         );
         $adminService->createAdmin($data);
     }
 
-    public function listAction(Request $request)
-    {
-        $adminService = $this->get('bike.dashboard.service.admin');
-        $page = $request->query->get('p');
-        $pageNum = 10;
-        $args = $request->query->all();
-        $rs = $adminService->searchAdmin($args, $page, $pageNum);
-        return $adminService->searchAdmin($args, $page, $pageNum);
-        return array();
-    }
 }

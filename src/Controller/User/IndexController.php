@@ -13,6 +13,7 @@ use Symfony\Component\HttpFoundation\Cookie;
 
 use Bike\Dashboard\Controller\AbstractController;
 use Bike\Dashboard\Db\Primary\User as PrimaryUser;
+
 /**
  * @Route("/user")
  */
@@ -54,6 +55,7 @@ class IndexController extends AbstractController
             $user = $userService->getUser($id);
             return ['user'=>$user];
         }
+
         return array();
     } 
 

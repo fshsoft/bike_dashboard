@@ -15,24 +15,24 @@ class UserService extends AbstractService
     {
         $data = ArgUtil::getArgs($data, array(
             'name',
-            'username',
+            'mobile',
+            'balance',
+            'id_no',
+            'is_certificated',
             'pwd',
             'repwd',
         ));
         $data['id'] = $id;
         $this->validateName($data['name']);
+        $this->validateMobile($data['mobile'],$id);
+        if ($data['pwd']) {
+            $this->validatePassword($data['pwd'], $data['repwd']);    
+            $data['pwd'] = $this->hashPassword($data['pwd']);
+        } else {
+            unset($data['pwd']);
+        }
         $userDao = $this->getPrimaryUserDao();
-        $userConn = $userDao->getConn();   
-        $userService = $this->container->get('bike.dashboard.service.user');
-        $userConn->beginTransaction();
-        try {          
-            $user = new User($data);
-            $userDao->save($user);
-            $userConn->commit();
-        } catch (\Exception $e) {
-            $userConn->rollBack();
-            throw $e;
-        }   
+        return $userDao->update($id,$data); 
     }
 
     public function searchUser(array $args, $page, $pageNum)
@@ -92,6 +92,63 @@ class UserService extends AbstractService
         if ($len > 20) {
             throw new LogicException('用户名称不能多于20个字符');
         }
+    }
+
+    protected function validateMobile($mobile,$id = null)
+    {
+        if (!$mobile) {
+            throw new LogicException('手机号不能为空');
+        }
+        if (!preg_match('/^1[3|4|5|7|8]\d{9}$/', $mobile)) {
+            throw new LogicException('手机号格式不合法');
+        }
+        $user = $this->getUserByMobile($mobile,$id);
+        if ($user) {
+            if ($id !== null) {
+                if ($user->getId() == $id ) {
+                    return true;
+                }
+            }
+            throw new LogicException('手机号已存在');
+        }
+    }
+
+    protected function validatePassword($password, $repassword = null)
+    {
+        if (!$password) {
+            throw new LogicException('密码不能为空');
+        }
+
+        $len = strlen($password);
+        if ($len < 6) {
+            throw new LogicException('密码长度最少6位');
+        } elseif ($len > 16) {
+            throw new LogicException('密码长度最多16位');
+        }
+
+        if ($repassword !== null) {
+            if ($password !== $repassword) {
+                throw new LogicException('两次输入的密码不一致');
+            }
+        }
+    }
+
+    public function hashPassword($password)
+    {
+        $options = [
+            'cost' => 10,
+        ];
+        return  password_hash($password, PASSWORD_BCRYPT, $options);
+    }
+
+    public function getUserByMobile($mobile)
+    {
+        $key = 'user.mobile.' . $mobile;
+        $userDao = $this->getPrimaryUserDao();
+        $user = $userDao->find(array(
+            'mobile' => $mobile,
+        ));
+        return $user;
     }
 
     protected function getPrimaryUserDao()

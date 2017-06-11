@@ -39,7 +39,6 @@ class AdminService extends AbstractService
             'name',
         ));
         $this->validateUsername($data['username'],$id);
-
         if ($data['pwd']) {
             $this->validatePassword($data['pwd'], $data['repwd']);    
             $data['pwd'] = $this->hashPassword($data['pwd']);
@@ -48,7 +47,6 @@ class AdminService extends AbstractService
         }
         $adminDao = $this->getPrimaryAdminDao();
         return $adminDao->update($id,$data);        
-
     }
 
     public function searchAdmin(array $args, $page, $pageNum)
@@ -64,7 +62,6 @@ class AdminService extends AbstractService
         $offset = ($page - 1) * $pageNum;
         $adminDao = $this->getPrimaryAdminDao();
         $adminList = $adminDao->findList('*', $args, $offset, $pageNum);
-        //print_r($adminList);die;
         $total = $adminDao->findNum($args);
         if ($total) {
             $totalPage = ceil($total / $pageNum);
