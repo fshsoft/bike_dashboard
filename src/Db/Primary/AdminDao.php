@@ -19,8 +19,12 @@ class AdminDao extends AbstractDao
     {
         $where = ArgUtil::getArgs($where, array(
             'username',
+            'name',
             'id.in',
         ));
+        if ($where['name']) {
+            $qb->andWhere('name like :likename')->setParameter(':likename','%'.$where['name'].'%');
+        }
         if ($where['username']) {
             $qb->andWhere('username = ' . $qb->createNamedParameter($where['username']));
         }

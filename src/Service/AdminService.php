@@ -97,6 +97,18 @@ class AdminService extends AbstractService
         return $admin;
     }
 
+    public function delAdmin($id)
+    {
+        $adminDao = $this->getPrimaryAdminDao();
+        $admin = $adminDao->find($id);
+        print_r($admin);die;
+        if ($admin) {
+            return $adminDao->delete($id); 
+        }else{
+            throw new LogicException('参数错误');
+        }
+    }
+
     public function getAdminByUsername($username)
     {
         $key = $this->getAdminRequestCacheKey('username', $username);

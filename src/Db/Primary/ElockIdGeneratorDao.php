@@ -6,13 +6,12 @@ use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\Query\QueryBuilder;
 
 use Bike\Dashboard\Db\AbstractDao;
-use Bike\Dashboard\Util\ArgUtil;
 
-class BikeDao extends AbstractDao
+class ElockIdGeneratorDao extends AbstractDao
 {
     protected function parseTable($cond, $dbOp)
     {
-        return "`{$this->db}`.`{$this->prefix}bike`";
+        return "`{$this->db}`.`{$this->prefix}elock_id_generator`";
     }
 
     protected function applyWhere(QueryBuilder $qb, array $where, $dbOp)

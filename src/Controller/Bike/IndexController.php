@@ -25,18 +25,35 @@ class IndexController extends AbstractController
      */
     public function indexAction(Request $request)
     {
-
-        return array();
+        $args = $request->query->all();
+        $bikeService = $this->get('bike.dashboard.service.bike');
+        $page = $request->query->get('p');
+        $pageNum = 10;
+        //print_r($bikeService->searchBike($args, $page, $pageNum));die;        
+        return $bikeService->searchBike($args, $page, $pageNum);
     }
 
     /**
      * @Route("/new", name="bike_new")
-     * @Template("BikeDashboardBundle:bike/index:newbike.html.twig")
+     * @Template("BikeDashboardBundle:bike/index:new.html.twig")
      */
-    public function newbikeAction()
+    public function newbikeAction(Request $request)
     {
-        
-        return array();
+        $userDao = $this->container->get('bike.dashboard.dao.primary.user');
+        $userList = $userDao->findList('*', array(), 0, 0);
+        if ($request->isMethod('post')) {
+            $data = $request->request->all();
+            $bikeService = $this->get('bike.dashboard.service.bike');
+            try {
+                $bikeService->createBike($data);
+                return $this->jsonSuccess();
+            } catch (\Exception $e) {
+                return $this->jsonError($e);
+            }
+        }
+        return array(
+            'userlist' => $userList
+        );
     }
 
 

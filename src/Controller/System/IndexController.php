@@ -28,10 +28,7 @@ class IndexController extends AbstractController
         $page = $request->query->get('p');
         $pageNum = 10;
         $args = $request->query->all();
-        $rs = $adminService->searchAdmin($args, $page, $pageNum);
-        //print_r($rs);die;
         return $adminService->searchAdmin($args, $page, $pageNum);
-        return array();
     }
 
     /**
@@ -70,9 +67,7 @@ class IndexController extends AbstractController
             }
         } else {
             $admin = $adminService->getAdmin($id);
-            $passportService = $this->container->get('bike.dashboard.service.passport');
-            $passport = $passportService->getPassport($id);
-            return ['admin'=>$admin,'passport'=>$passport];
+            return ['admin'=>$admin];
         }
         return array();
     }
@@ -83,7 +78,18 @@ class IndexController extends AbstractController
      */
     public function delAction(Request $request)
     {
-        
+        $adminService = $this->get('bike.dashboard.service.admin');
+        if ($request->isMethod('post')) {
+            $data = $request->request->all();
+            try {
+                $adminService->delAdmin($id);
+                return $this->jsonSuccess();
+            } catch (\Exception $e) {
+                return $this->jsonError($e);
+            }
+        } else {
+            $admin = $adminService->getAdmin($id);
+        }
         return array();
     }
 

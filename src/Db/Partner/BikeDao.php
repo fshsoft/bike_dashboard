@@ -1,6 +1,6 @@
 <?php
 
-namespace Bike\Dashboard\Db\Primary;
+namespace Bike\Dashboard\Db\Partner;
 
 use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\Query\QueryBuilder;

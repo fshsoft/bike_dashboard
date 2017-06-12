@@ -24,10 +24,10 @@
                 </ul>
                 <div class="tab-content">
                     <div class="tab-pane active" id="bicycle">
-                        <form class="search_form" id="search_form" action="#" method="get">
+                        <form class="search_form" id="search_form" method="get">
                             <!-- 搜索 -->
                             <div class="dataTables_length fa-border" style="margin: 10px 0; padding: 10px">
-                                <input type="text" name="admin_name" value="" class="input-sm" style="border: 1px solid #a9a9a9;" placeholder="用户名称">
+                                <input type="text" name="name" value="{{ app.request.query.get('name') }}" class="input-sm" style="border: 1px solid #a9a9a9;" placeholder="姓名">
                                 <select name="role_id" class="input-sm">
                                     <option value="">角色</option>
                                     <option value="1">管理员</option>
@@ -53,8 +53,8 @@
                             <table class="table table-bordered table-hover dataTable" role="grid">
                                 <thead>
                                 <tr>
-                                    <th>用户名称</th>
-                                    <th>角色</th>
+                                    <th>用户名</th>
+                                    <th>姓名</th>
                                     <th>最后登录时间</th>
                                     <th>状态</th>
                                     <th style="min-width:130px;">操作</th>
@@ -69,16 +69,7 @@
                                     <td>{{ v.getCreate_time|date('Y-m-d H:i:s') }}</td>
                                     <td>启用</td>
                                     <td>
-                                        <div class="btn-group">
-                                            <button data-url="{{ path('admin_edit',{id:v.getId()}) }}" type="button" class="btn btn-info link"><i class="fa fa-fw fa-pencil"></i>编辑</button>
-                                            <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown">
-                                                <span class="caret"></span>
-                                                <span class="sr-only">Toggle Dropdown</span>
-                                            </button>
-                                            <ul class="dropdown-menu" role="menu">
-                                                <li><a href="{{ path('admin_del',{id:v.getId()}) }}">删除</a></li>
-                                            </ul>
-                                        </div>
+                                        <a href="{{ path('admin_edit',{id:v.getId()}) }}" class="btn btn-xs  btn-primary"><i class="fa fa-fw fa-edit"></i>编辑</a>
                                     </td>
                                 </tr>
 {% endfor %}

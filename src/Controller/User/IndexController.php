@@ -30,10 +30,7 @@ class IndexController extends AbstractController
         $pageNum = 10;
         $args = $request->query->all();
         $user = $this->getUser();
-        $rs = $userService->searchUser($args, $page, $pageNum);
-        //print_r($rs);die;
         return $userService->searchUser($args, $page, $pageNum);
-        return array();
     }
 
     /**
@@ -55,7 +52,6 @@ class IndexController extends AbstractController
             $user = $userService->getUser($id);
             return ['user'=>$user];
         }
-
         return array();
     } 
 

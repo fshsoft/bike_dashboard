@@ -5,6 +5,8 @@
            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
     <parameters>
         <parameter key="bike.dashboard.dao.primary.user.class">Bike\Dashboard\Db\Primary\UserDao</parameter>
+        <parameter key="bike.dashboard.dao.primary.bike.class">Bike\Dashboard\Db\Primary\BikeDao</parameter>
+        <parameter key="bike.dashboard.dao.primary.bike_id_generator.class">Bike\Partner\Db\Primary\BikeIdGeneratorDao</parameter>
     </parameters>
 
     <services>
@@ -13,6 +15,18 @@
             <argument>%bike.dashboard.params.dao.primary.db_name%</argument>
             <argument>%bike.dashboard.params.dao.primary.prefix%</argument>
             <argument>Bike\Dashboard\Db\Primary\User</argument>
+        </service>
+        <service id="bike.dashboard.dao.primary.bike" class="%bike.dashboard.dao.primary.bike.class%">
+            <argument type="service" id="bike.dashboard.params.dao.primary.conn_id"/>
+            <argument>%bike.dashboard.params.dao.primary.db_name%</argument>
+            <argument>%bike.dashboard.params.dao.primary.prefix%</argument>
+            <argument>Bike\Dashboard\Db\Primary\Bike</argument>
+        </service>
+        <service id="bike.dashboard.dao.primary.bike_id_generator" class="%bike.dashboard.dao.primary.bike_id_generator.class%">
+            <argument type="service" id="bike.dashboard.params.dao.primary.conn_id"/>
+            <argument>%bike.dashboard.params.dao.primary.db_name%</argument>
+            <argument>%bike.dashboard.params.dao.primary.prefix%</argument>
+            <argument>Bike\dashboard\Db\Primary\BikeIdGenerator</argument>
         </service>
     </services>
 </container>
