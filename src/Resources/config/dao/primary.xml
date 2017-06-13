@@ -6,7 +6,9 @@
     <parameters>
         <parameter key="bike.dashboard.dao.primary.user.class">Bike\Dashboard\Db\Primary\UserDao</parameter>
         <parameter key="bike.dashboard.dao.primary.bike.class">Bike\Dashboard\Db\Primary\BikeDao</parameter>
-        <parameter key="bike.dashboard.dao.primary.bike_id_generator.class">Bike\Partner\Db\Primary\BikeIdGeneratorDao</parameter>
+        <parameter key="bike.dashboard.dao.primary.bike_id_generator.class">Bike\Dashboard\Db\Primary\BikeIdGeneratorDao</parameter>
+        <parameter key="bike.dashboard.dao.primary.article.class">Bike\Dashboard\Db\Primary\ArticleDao</parameter>
+        <parameter key="bike.dashboard.dao.primary.article_category.class">Bike\Dashboard\Db\Primary\ArticleCategoryDao</parameter>
     </parameters>
 
     <services>
@@ -26,7 +28,19 @@
             <argument type="service" id="bike.dashboard.params.dao.primary.conn_id"/>
             <argument>%bike.dashboard.params.dao.primary.db_name%</argument>
             <argument>%bike.dashboard.params.dao.primary.prefix%</argument>
-            <argument>Bike\dashboard\Db\Primary\BikeIdGenerator</argument>
+            <argument>Bike\Dashboard\Db\Primary\BikeIdGenerator</argument>
+        </service>
+        <service id="bike.dashboard.dao.primary.article" class="%bike.dashboard.dao.primary.article.class%">
+            <argument type="service" id="bike.dashboard.params.dao.primary.conn_id"/>
+            <argument>%bike.dashboard.params.dao.primary.db_name%</argument>
+            <argument>%bike.dashboard.params.dao.primary.prefix%</argument>
+            <argument>Bike\Dashboard\Db\Primary\Article</argument>
+        </service>
+        <service id="bike.dashboard.dao.primary.article_category" class="%bike.dashboard.dao.primary.article_category.class%">
+            <argument type="service" id="bike.dashboard.params.dao.primary.conn_id"/>
+            <argument>%bike.dashboard.params.dao.primary.db_name%</argument>
+            <argument>%bike.dashboard.params.dao.primary.prefix%</argument>
+            <argument>Bike\Dashboard\Db\Primary\ArticleCategory</argument>
         </service>
     </services>
 </container>

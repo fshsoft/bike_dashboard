@@ -77,31 +77,23 @@
                             <th>车锁编号</th>
                             <th>单车类型</th>
                             <th>城市</th>
-                            <th>是否使用中</th>
+                            <th>状态</th>
                             <th>操作</th>
                         </tr>
                         </thead>
                         <tbody>
+{% for v in list.bike %}
                         <tr>
-                            <td>10000001</td>
-                            <td>10000001</td>
+                            <td>{{ v.getId() }}</td>
+                            <td>{{ v.getElock_id() }}</td>
                             <td>百宝1代</td>
                             <td>上海</td>
-                            <td>是</td>
+                            <td>可用</td>
                             <td>
-                                <div class="btn-group">
-                                    <button data-url="#" type="button" class="btn btn-info link"><i class="fa fa-fw fa-eye"></i>查看</button>
-                                    <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown">
-                                        <span class="caret"></span>
-                                        <span class="sr-only">Toggle Dropdown</span>
-                                    </button>
-                                    <ul class="dropdown-menu" role="menu">
-                                        <li><a href="#">编辑</a></li>
-                                        <li><a href="#">删除</a></li>
-                                    </ul>
-                                </div>
+                                <a href="{{ path('bike_edit',{id:v.getId()}) }}" class="btn btn-xs  btn-primary"><i class="fa fa-fw fa-edit"></i>编辑</a>
                             </td>
                         </tr>
+{% endfor %}
                         </tbody>
                     </table>
                 </div>

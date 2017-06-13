@@ -9,13 +9,12 @@ use Bike\Dashboard\Util\ArgUtil;
 use Bike\Dashboard\Db\Primary\Bike as PrimaryBike;
 use Bike\Dashboard\Db\Partner\Bike as PartnerBike;
 use Bike\Dashboard\Db\Primary\BikeIdGenrator;
-use Bike\Dashboard\Db\Primary\Admin;
+use Bike\Dashboard\Db\Primary\User;
 
 class BikeService extends AbstractService
 {
     public function createBike(array $data)
     {
-
         $primaryBikeDao = $this->getPrimaryBikeDao();
         $primaryBikeConn = $primaryBikeDao->getConn();
         $partnerBikeDao = $this->getPartnerBikeDao();
@@ -26,23 +25,29 @@ class BikeService extends AbstractService
         $partnerBikeConn->beginTransaction();
         $bikeIdGeneratorConn->beginTransaction();
         try {
-            $id = rand(10000000,99999999);
+            $id = $this->generateBikeId();
             $primaryBike = new PrimaryBike();
             $time = time();
             $primaryBike
                 ->setId($id)
-                ->setUser_id($data['user_id'])
-                ->setElock_id('1')
+                ->setUserId($data['user_id'])
+                ->setElockId($id)
                 ->setLng($data['lng'])
                 ->setLat($data['lat'])
-                ->setCreate_time($time);
+                ->setCreateTime($time);        
             $primaryBikeDao->create($primaryBike);
+            
             $partnerBike = new PartnerBike();
             $partnerBike
                 ->setId($id)
-                ->setCreate_ime($time);
+                ->setUserId($data['user_id'])
+                ->setElockId($id)
+                ->setClientId(3)
+                ->setAgentId(2)
+                ->setLng($data['lng'])
+                ->setLat($data['lat'])
+                ->setCreateTime($time);
             $partnerBikeDao->create($partnerBike);
-
             $primaryBikeConn->commit();
             $partnerBikeConn->commit();
             $bikeIdGeneratorConn->commit();
@@ -90,6 +95,26 @@ class BikeService extends AbstractService
         );
     }
 
+    public function editBike($id,array $data)
+    {
+        $primaryBikeDao = $this->getPrimaryBikeDao();
+        $primaryBikeConn = $primaryBikeDao->getConn();
+        $partnerBikeDao = $this->getPartnerBikeDao();
+        $partnerBikeConn = $partnerBikeDao->getConn();
+        $primaryBikeConn->beginTransaction();
+        $partnerBikeConn->beginTransaction();
+        try {
+            $primaryBikeDao->update($id,$data);
+            $partnerBikeDao->update($id,$data);
+            $primaryBikeConn->commit();
+            $partnerBikeConn->commit();
+        } catch (\Exception $e) {
+            $primaryBikeConn->rollBack();
+            $partnerBikeConn->rollBack();
+            throw $e;
+        }
+    }
+
     public function getBikeById($id)
     {
         $key = 'bike.id.' . $id;
@@ -122,7 +147,7 @@ class BikeService extends AbstractService
 
     protected function getBikeIdGeneratorDao()
     {
-        return $this->container->get('bike.dashboard.dao.primary.bikeidgenerator');
+        return $this->container->get('bike.dashboard.dao.primary.bike_id_generator');
     }
 
 }

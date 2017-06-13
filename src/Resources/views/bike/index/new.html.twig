@@ -48,8 +48,8 @@
                   <input type="text" class="" id="lat" name="lat" placeholder="纬度" required="required">
                 </div>
                 <div class="form-group">
-                  <label for="repwd">车主</label>
-                  <select name="user_id" class="form-control select2">
+                  <label for="repwd">车主</label><br/>
+                  <select name="user_id" class="select">
                     <option value="">请选择</option>
 {% for v in userlist %}
                     <option value="{{ v.getId() }}">{{v.getName()}}</option>
@@ -58,8 +58,8 @@
                 </div>
               </div>
               <!-- /.box-body -->
-    </div>
-</div>
+          </div>
+      </div>
 
               <div class="box-footer">
                 <button type="submit" class="btn btn-primary">创建</button>

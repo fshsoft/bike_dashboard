@@ -28,8 +28,7 @@ class IndexController extends AbstractController
         $args = $request->query->all();
         $bikeService = $this->get('bike.dashboard.service.bike');
         $page = $request->query->get('p');
-        $pageNum = 10;
-        //print_r($bikeService->searchBike($args, $page, $pageNum));die;        
+        $pageNum = 10;      
         return $bikeService->searchBike($args, $page, $pageNum);
     }
 
@@ -56,5 +55,27 @@ class IndexController extends AbstractController
         );
     }
 
+    /**
+     * @Route("/edit/{id}", name="bike_edit")
+     * @Template("BikeDashboardBundle:bike/index:edit.html.twig")
+     */
+    public function editAction(Request $request,$id)
+    {
+        $bikeService = $this->get('bike.dashboard.service.bike');
+        $userDao = $this->container->get('bike.dashboard.dao.primary.user');
+        $userList = $userDao->findList('*', array(), 0, 0);
+        if ($request->isMethod('post')) {
+            $data = $request->request->all();
+            try {
+                $bikeService->editBike($id,$data);
+                return $this->jsonSuccess();
+            } catch (\Exception $e) {
+                return $this->jsonError($e);
+            }
+        } else {
+            $bike = $bikeService->getBikeById($id);
+            return ['bike'=>$bike,'userlist' => $userList];
+        }
+    } 
 
 }
