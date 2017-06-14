@@ -96,6 +96,12 @@
 {% endfor %}
                         </tbody>
                     </table>
+                    <div class="row">
+                        <div class="col-xs-12">
+                        {% import 'BikeDashboardBundle::paginator.macro.twig' as paginator %}
+                        {{ paginator.paginate(page, totalPage, 5, 'bike_list', app.request.query.all(), ['pull-right']) }}
+                        </div>
+                    </div>
                 </div>
                 <!-- /.tab-pane -->
 

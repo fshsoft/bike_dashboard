@@ -22,7 +22,9 @@ class ArticleDao extends AbstractDao
 
     protected function applyOrder(QueryBuilder $qb, array $order)
     {
-
+        if (!$order) {
+            $qb->orderBy('sort', 'asc');
+        }
     }
 
     protected function applyGroup(QueryBuilder $qb, array $group)

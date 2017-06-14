@@ -16,9 +16,9 @@ class ArticleService extends AbstractService
     public function createArticle(array $data)
     {
         $data = ArgUtil::getArgs($data, array(
-            'category_id',
             'title',
             'sub_title',
+            'category_id',
             'content',
             'status',
             'sort',
@@ -58,8 +58,20 @@ class ArticleService extends AbstractService
         $offset = ($page - 1) * $pageNum;
         $articleDao = $this->getPrimaryArticleDao();
         $articleList = $articleDao->findList('*', $args, $offset, $pageNum);
-        print_r($articleList);die;
         $total = $articleDao->findNum($args);
+        $categoryDao = $this->container->get('bike.dashboard.dao.primary.article_category');
+        if ($articleList) {
+            $categoryIds = array();
+            foreach ($articleList as $v) {
+                $categoryIds[] = $v->getCategory_id();
+            }
+            $categoryMap = $categoryDao->findMap('', array(
+                'id.in' => $categoryIds,
+            ), 0, 0);
+        }else{
+            $categoryMap = array();
+            $articleList = array();
+        }
         if ($total) {
             $totalPage = ceil($total / $pageNum);
             if ($page > $totalPage) {
@@ -77,7 +89,24 @@ class ArticleService extends AbstractService
             'list' => array(
                 'article' => $articleList,
             ),
+            'map' => array(
+                'category' => $categoryMap,
+            ),
         );
+    }
+
+    public function getArticle($id)
+    {
+        $key = 'article.' . $id;
+        $article = $this->getRequestCache($key);
+        if (!$article) {
+            $articleDao = $this->getPrimaryArticleDao();
+            $article = $articleDao->find($id);
+            if ($article) {
+                $this->setRequestCache($key, $article);
+            }
+        }
+        return $article;
     }
 
     protected function getPrimaryArticleDao()

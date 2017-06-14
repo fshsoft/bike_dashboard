@@ -43,7 +43,7 @@
                         </form>
                         <!-- 新增 -->
                         <div class="form-group">
-                            <a href="#" class="btn btn-primary btn-sm"><i class="fa fa-plus"></i>&nbsp;新增</a>
+                            <a href="{{ path('article_new') }}" class="btn btn-primary btn-sm"><i class="fa fa-plus"></i>&nbsp;新增</a>
                             <!--<button class="btn btn-default btn-sm button-upload" data-action="#"><i class="fa fa-upload"></i>&nbsp;导入</button>-->
                             <button class="btn btn-default btn-sm" form="search_form" formmethod="post" formaction="#"><i class="fa fa-download"></i>&nbsp;导出</button>
                         </div>
@@ -58,190 +58,26 @@
                                 </tr>
                                 </thead>
                                 <tbody>
+{% for v in list.article %}
                                 <tr>
                                     <!--<td><input type="checkbox" name="selected[]" value="1"></td>-->
-                                    <td>用户协议</td>
-                                    <td>帮助文档</td>
-                                    <td>1</td>
+                                    <td>{{ v.getTitle() }}</td>
+                                    <td>{{ map.category[v.getCategoryId()].getName() }}</td>
+                                    <td>{{ v.getSort() }}</td>
                                     <td>
-                                        <div class="btn-group">
-                                            <button data-url="#" type="button" class="btn btn-info link"><i class="fa fa-fw fa-pencil"></i>编辑</button>
-                                            <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown">
-                                                <span class="caret"></span>
-                                                <span class="sr-only">Toggle Dropdown</span>
-                                            </button>
-                                            <ul class="dropdown-menu" role="menu">
-                                                <li><a href="#">删除</a></li>
-                                            </ul>
-                                        </div>
+                                        <a href="{{ path('article_edit',{id:v.getId()}) }}" class="btn btn-xs  btn-primary"><i class="fa fa-fw fa-edit"></i>编辑</a>
                                     </td>
-                                </tr>
-                                                                <tr>
-                                    <!--<td><input type="checkbox" name="selected[]" value="2"></td>-->
-                                    <td>押金说明</td>
-                                    <td>帮助文档</td>
-                                    <td>2</td>
-                                    <td>
-                                        <div class="btn-group">
-                                            <button data-url="#" type="button" class="btn btn-info link"><i class="fa fa-fw fa-pencil"></i>编辑</button>
-                                            <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown">
-                                                <span class="caret"></span>
-                                                <span class="sr-only">Toggle Dropdown</span>
-                                            </button>
-                                            <ul class="dropdown-menu" role="menu">
-                                                <li><a href="#">删除</a></li>
-                                            </ul>
-                                        </div>
-                                    </td>
-                                </tr>
-                                                                <tr>
-                                    <!--<td><input type="checkbox" name="selected[]" value="3"></td>-->
-                                    <td>充值协议</td>
-                                    <td>帮助文档</td>
-                                    <td>3</td>
-                                    <td>
-                                        <div class="btn-group">
-                                            <button data-url="#" type="button" class="btn btn-info link"><i class="fa fa-fw fa-pencil"></i>编辑</button>
-                                            <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown">
-                                                <span class="caret"></span>
-                                                <span class="sr-only">Toggle Dropdown</span>
-                                            </button>
-                                            <ul class="dropdown-menu" role="menu">
-                                                <li><a href="#">删除</a></li>
-                                            </ul>
-                                        </div>
-                                    </td>
-                                </tr>
-                                                                <tr>
-                                    <!--<td><input type="checkbox" name="selected[]" value="4"></td>-->
-                                    <td>消费协议</td>
-                                    <td>帮助文档</td>
-                                    <td>4</td>
-                                    <td>
-                                        <div class="btn-group">
-                                            <button data-url="#" type="button" class="btn btn-info link"><i class="fa fa-fw fa-pencil"></i>编辑</button>
-                                            <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown">
-                                                <span class="caret"></span>
-                                                <span class="sr-only">Toggle Dropdown</span>
-                                            </button>
-                                            <ul class="dropdown-menu" role="menu">
-                                                <li><a href="#">删除</a></li>
-                                            </ul>
-                                        </div>
-                                    </td>
-                                </tr>
-                                                                <tr>
-                                    <!--<td><input type="checkbox" name="selected[]" value="5"></td>-->
-                                    <td>关于我们</td>
-                                    <td>帮助文档</td>
-                                    <td>5</td>
-                                    <td>
-                                        <div class="btn-group">
-                                            <button data-url="#" type="button" class="btn btn-info link"><i class="fa fa-fw fa-pencil"></i>编辑</button>
-                                            <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown">
-                                                <span class="caret"></span>
-                                                <span class="sr-only">Toggle Dropdown</span>
-                                            </button>
-                                            <ul class="dropdown-menu" role="menu">
-                                                <li><a href="#">删除</a></li>
-                                            </ul>
-                                        </div>
-                                    </td>
-                                </tr>
-                                                                <tr>
-                                    <!--<td><input type="checkbox" name="selected[]" value="6"></td>-->
-                                    <td>开不了锁</td>
-                                    <td>帮助文档</td>
-                                    <td>6</td>
-                                    <td>
-                                        <div class="btn-group">
-                                            <button data-url="#" type="button" class="btn btn-info link"><i class="fa fa-fw fa-pencil"></i>编辑</button>
-                                            <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown">
-                                                <span class="caret"></span>
-                                                <span class="sr-only">Toggle Dropdown</span>
-                                            </button>
-                                            <ul class="dropdown-menu" role="menu">
-                                                <li><a href="#">删除</a></li>
-                                            </ul>
-                                        </div>
-                                    </td>
-                                </tr>
-                                                                <tr>
-                                    <!--<td><input type="checkbox" name="selected[]" value="7"></td>-->
-                                    <td>发现车辆故障</td>
-                                    <td>帮助文档</td>
-                                    <td>7</td>
-                                    <td>
-                                        <div class="btn-group">
-                                            <button data-url="#" type="button" class="btn btn-info link"><i class="fa fa-fw fa-pencil"></i>编辑</button>
-                                            <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown">
-                                                <span class="caret"></span>
-                                                <span class="sr-only">Toggle Dropdown</span>
-                                            </button>
-                                            <ul class="dropdown-menu" role="menu">
-                                                <li><a href="#">删除</a></li>
-                                            </ul>
-                                        </div>
-                                    </td>
-                                </tr>
-                                                                <tr>
-                                    <!--<td><input type="checkbox" name="selected[]" value="8"></td>-->
-                                    <td>押金说明</td>
-                                    <td>帮助文档</td>
-                                    <td>8</td>
-                                    <td>
-                                        <div class="btn-group">
-                                           <button data-url="#" type="button" class="btn btn-info link"><i class="fa fa-fw fa-pencil"></i>编辑</button>
-                                            <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown">
-                                                <span class="caret"></span>
-                                                <span class="sr-only">Toggle Dropdown</span>
-                                            </button>
-                                            <ul class="dropdown-menu" role="menu">
-                                                <li><a href="#">删除</a></li>
-                                            </ul>
-                                        </div>
-                                    </td>
-                                </tr>
-                                                                <tr>
-                                    <!--<td><input type="checkbox" name="selected[]" value="9"></td>-->
-                                    <td>充值说明</td>
-                                    <td>帮助文档</td>
-                                    <td>9</td>
-                                    <td>
-                                        <div class="btn-group">
-                                            <button data-url="#" type="button" class="btn btn-info link"><i class="fa fa-fw fa-pencil"></i>编辑</button>
-                                            <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown">
-                                                <span class="caret"></span>
-                                                <span class="sr-only">Toggle Dropdown</span>
-                                            </button>
-                                            <ul class="dropdown-menu" role="menu">
-                                                <li><a href="#">删除</a></li>
-                                            </ul>
-                                        </div>
-                                    </td>
-                                </tr>
-                                                                <tr>
-                                    <!--<td><input type="checkbox" name="selected[]" value="10"></td>-->
-                                    <td>找不到车</td>
-                                    <td>帮助文档</td>
-                                    <td>10</td>
-                                    <td>
-                                        <div class="btn-group">
-                                            <button data-url="#" type="button" class="btn btn-info link"><i class="fa fa-fw fa-pencil"></i>编辑</button>
-                                            <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown">
-                                                <span class="caret"></span>
-                                                <span class="sr-only">Toggle Dropdown</span>
-                                            </button>
-                                            <ul class="dropdown-menu" role="menu">
-                                                <li><a href="#">删除</a></li>
-                                            </ul>
-                                        </div>
-                                    </td>
-                                </tr>
-
+                               </tr>
+{% endfor %}
                                 </tbody>
                             </table>
                         </form>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12">
+                        {% import 'BikeDashboardBundle::paginator.macro.twig' as paginator %}
+                        {{ paginator.paginate(page, totalPage, 5, 'article_list', app.request.query.all(), ['pull-right']) }}
+                        </div>
                     </div>
                 </div>
             </div>

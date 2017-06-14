@@ -28,6 +28,7 @@ class IndexController extends AbstractController
         $page = $request->query->get('p');
         $pageNum = 10;
         $args = $request->query->all();
+        // print_r($articleService->searchArticle($args, $page, $pageNum));die;
         return $articleService->searchArticle($args, $page, $pageNum);
     }
 
@@ -37,7 +38,7 @@ class IndexController extends AbstractController
      */
     public function newAction(Request $request)
     {
-    	$categoryDao = $this->container->get('bike.dashboard.dao.primary.article');
+    	$categoryDao = $this->container->get('bike.dashboard.dao.primary.article_category');
         $categoryList = $categoryDao->findList('*', array(), 0, 0);
         if ($request->isMethod('post')) {
             $data = $request->request->all();
@@ -58,6 +59,8 @@ class IndexController extends AbstractController
      */
     public function editAction(Request $request,$id)
     {
+        $categoryDao = $this->container->get('bike.dashboard.dao.primary.article_category');
+        $categoryList = $categoryDao->findList('*', array(), 0, 0);
         $articleService = $this->get('bike.dashboard.service.article');
         if ($request->isMethod('post')) {
             $data = $request->request->all();
@@ -69,9 +72,8 @@ class IndexController extends AbstractController
             }
         } else {
             $article = $articleService->getArticle($id);
-            return ['article'=>$article];
+            return ['article'=>$article,'categoryList'=>$categoryList];
         }
-        return array();
     }
 
 }

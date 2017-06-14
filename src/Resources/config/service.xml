@@ -9,6 +9,7 @@
         <parameter key="bike.dashboard.service.user.class">Bike\Dashboard\Service\UserService</parameter>
         <parameter key="bike.dashboard.service.bike.class">Bike\Dashboard\Service\BikeService</parameter>
         <parameter key="bike.dashboard.service.article.class">Bike\Dashboard\Service\ArticleService</parameter>
+        <parameter key="bike.dashboard.service.article_category.class">Bike\Dashboard\Service\ArticleCategoryService</parameter>
     </parameters>
 
     <services>
@@ -28,6 +29,11 @@
             </call>
         </service>
         <service id="bike.dashboard.service.article" class="%bike.dashboard.service.article.class%">
+            <call method="setContainer">
+                <argument type="service" id="service_container"/>
+            </call>
+        </service>
+        <service id="bike.dashboard.service.article_category" class="%bike.dashboard.service.article_category.class%">
             <call method="setContainer">
                 <argument type="service" id="service_container"/>
             </call>

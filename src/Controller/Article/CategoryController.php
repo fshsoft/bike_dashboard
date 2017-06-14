@@ -19,16 +19,16 @@ use Bike\Dashboard\Controller\AbstractController;
 class CategoryController extends AbstractController
 {
     /**
-     * @Route("/", name="article_category")
+     * @Route("/", name="category_list")
      * @Template("BikeDashboardBundle:article/category:index.html.twig")
      */
     public function indexAction(Request $request)
     {
-    	$categoryService = $this->get('bike.dashboard.service.article');
+    	$categoryService = $this->get('bike.dashboard.service.article_category');
         $page = $request->query->get('p');
         $pageNum = 10;
         $args = $request->query->all();
-        return $categoryService->searchArticle($args, $page, $pageNum);
+        return $categoryService->searchArticleCategory($args, $page, $pageNum);
     }
 
 
@@ -40,9 +40,9 @@ class CategoryController extends AbstractController
     {
         if ($request->isMethod('post')) {
             $data = $request->request->all();
-            $articleService = $this->get('bike.dashboard.service.article');
+            $categoryService = $this->get('bike.dashboard.service.article_category');
             try {
-                $adminService->createAdmin($data);
+                $categoryService->createArticleCategory($data);
                 return $this->jsonSuccess();
             } catch (\Exception $e) {
                 return $this->jsonError($e);
@@ -57,18 +57,18 @@ class CategoryController extends AbstractController
      */
     public function editAction(Request $request,$id)
     {
-        $adminService = $this->get('bike.dashboard.service.article');
+        $categoryService = $this->get('bike.dashboard.service.article_category');
         if ($request->isMethod('post')) {
             $data = $request->request->all();
             try {
-                $adminService->editAdmin($id,$data);
+                $categoryService->editArticleCategory($id,$data);
                 return $this->jsonSuccess();
             } catch (\Exception $e) {
                 return $this->jsonError($e);
             }
         } else {
-            $admin = $adminService->getAdmin($id);
-            return ['admin'=>$admin];
+            $category = $categoryService->getArticleCategory($id);
+            return ['category'=>$category];
         }
         return array();
     }

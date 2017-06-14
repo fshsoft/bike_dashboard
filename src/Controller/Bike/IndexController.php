@@ -20,7 +20,7 @@ use Bike\Dashboard\Db\Dashboard\AbstractDao;
 class IndexController extends AbstractController
 {
     /**
-     * @Route("/", name="bike")
+     * @Route("/", name="bike_list")
      * @Template("BikeDashboardBundle:bike/index:index.html.twig")
      */
     public function indexAction(Request $request)

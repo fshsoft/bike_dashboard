@@ -13,7 +13,7 @@ class Article extends AbstractEntity
         'category_id' => null,
         'title' => null,
         'sub_title' => null,
-        'content' => '',
+        'content' => null,
         'picpath' => null,
         'hits' => 0,
         'likes' => 0,

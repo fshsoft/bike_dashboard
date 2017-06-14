@@ -10,7 +10,7 @@
       <ol class="breadcrumb">
         <li><i class="fa fa-dashboard"></i> 首页</li>
         <li>单车管理</li>
-        <li><a href="{{ path('bike') }}">单车</a></li>
+        <li><a href="{{ path('bike_list') }}">单车</a></li>
         <li class="active">新增</li>
       </ol>
     </section>
@@ -83,7 +83,7 @@ $(function(){
         $form.find('button[type="submit"]').prop('disabled', true);
         $.post(url, data, function(result){
             if (result.errno == 0) {
-                window.location.href = '{{ path('bike') }}';
+                window.location.href = '{{ path('bike_list') }}';
             } else {
                 $form.find('.callout-danger').show().find('p').html(result.errmsg);
             }
