@@ -30,8 +30,6 @@ class BikeService extends AbstractService
             $time = time();
             $primaryBike
                 ->setId($id)
-                ->setUserId($data['user_id'])
-                ->setElockId($id)
                 ->setLng($data['lng'])
                 ->setLat($data['lat'])
                 ->setCreateTime($time);        
@@ -40,10 +38,6 @@ class BikeService extends AbstractService
             $partnerBike = new PartnerBike();
             $partnerBike
                 ->setId($id)
-                ->setUserId($data['user_id'])
-                ->setElockId($id)
-                ->setClientId(3)
-                ->setAgentId(2)
                 ->setLng($data['lng'])
                 ->setLat($data['lat'])
                 ->setCreateTime($time);
