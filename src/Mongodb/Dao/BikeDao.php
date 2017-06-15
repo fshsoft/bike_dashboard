@@ -2,7 +2,7 @@
 
 namespace Bike\Dashboard\Mongodb\Dao;
 
-class Bike extends AbstractEntity
+class Bike extends AbstractDao
 {
 
     protected static $cols = array(
