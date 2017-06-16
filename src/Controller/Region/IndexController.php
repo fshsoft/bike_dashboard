@@ -13,7 +13,7 @@ use Symfony\Component\HttpFoundation\Cookie;
 
 use Bike\Dashboard\Controller\AbstractController;
 use Bike\Dashboard\Mongodb\Connection;
-
+use Bike\Dashboard\Mongodb\Dao\AbstractDao;
 /**
  * @Route("/region")
  */
@@ -25,22 +25,8 @@ class IndexController extends AbstractController
      */
     public function indexAction(Request $request)
     {
-    	$c = new Connection('127.0.0.1','27017');
-    	
-    	$bulk = new MongoDB\Driver\BulkWrite;
-    	$filter = ['x' => ['$gt' => 0]];
-		$options = [
-		    'projection' => ['_id' => 0],
-		    'sort' => ['x' => -1],
-		];
+    	 $c = new Connection('127.0.0.1','27017');
 
-
-		$query = new MongoDB\Driver\Query($filter, $options);
-		$cursor = $manager->executeQuery('test.sites', $query);
-
-		foreach ($cursor as $document) {
-		    print_r($document);
-		}
 
         return array();
     }
