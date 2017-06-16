@@ -16,11 +16,7 @@ class User extends Admin implements UserInterface
 
     public function getRoles()
     {
-        $role = $this->getRole();
-        if ($role) {
-            return array($role);
-        }
-        return array();
+        return ['ROLE_ADMIN'];
     }
 
     public function getPassword()
