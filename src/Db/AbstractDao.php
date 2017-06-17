@@ -7,6 +7,7 @@ use Doctrine\DBAL\Query\QueryBuilder;
 
 use Bike\Dashboard\Exception\Debug\DebugException;
 use Bike\Dashboard\Util\ArgUtil;
+use Bike\Dashboard\Util\NamingUtil;
 
 abstract class AbstractDao implements DaoInterface
 {
@@ -36,22 +37,22 @@ abstract class AbstractDao implements DaoInterface
     protected $entityClass;
 
     final public function __construct(Connection $conn, $db, $prefix, $entityClass, 
-        $entityResultSetClass = 'Bike\\Dashboard\\Db\\EntityResultSet')
+        $entityResultSetClass = 'Bike\Dashboard\Db\EntityResultSet')
     {
         $this->conn = $conn;
         $this->db = $db;
         $this->prefix = $prefix;
 
-        if (!is_subclass_of($entityClass, 'Bike\\Dashboard\\Db\\EntityInterface')) {
-            throw new DebugException(sprintf('%s必须实现Bike\\Dashboard\\Db\\EntityInterface', $entityClass));
+        if (!is_subclass_of($entityClass, 'Bike\Dashboard\Db\EntityInterface')) {
+            throw new DebugException(sprintf('%s必须实现Bike\Dashboard\Db\EntityInterface', $entityClass));
         }
         if (!class_exists($entityClass)) {
             throw new DebugException(sprintf('%s不存在', $entityClass));
         }
         $this->entityClass = $entityClass;
 
-        if (!is_subclass_of($entityResultSetClass, 'Bike\\Dashboard\\Db\\EntityResultSetInterface')) {
-            throw new DebugException(sprintf('%s必须实现Bike\\Dashboard\\Db\\EntityResultSetInterface', $entityResultSetClass));
+        if (!is_subclass_of($entityResultSetClass, 'Bike\Dashboard\Db\EntityResultSetInterface')) {
+            throw new DebugException(sprintf('%s必须实现Bike\Dashboard\Db\EntityResultSetInterface', $entityResultSetClass));
         }
         if (!class_exists($entityResultSetClass)) {
             throw new DebugException(sprintf('%s不存在', $entityResultSetClass));
@@ -274,7 +275,7 @@ abstract class AbstractDao implements DaoInterface
         return $this->conn->executeUpdate($sql, $params);
     }
 
-    public function update($where, $data)
+    public function update($where, $data, array $exprs = array())
     {
         // 过滤data中不需要的字段
         if (is_array($data)) {
@@ -295,6 +296,9 @@ abstract class AbstractDao implements DaoInterface
         }
         foreach ($data as $k => $v) {
             $qb->set($k, $qb->createNamedParameter($v));
+        }
+        foreach ($exprs as $col => $expr) {
+            $qb->set($col, $expr);
         }
         
         return $qb->update($this->parseTable($where, self::DB_OP_UPDATE))->execute();
@@ -344,6 +348,38 @@ abstract class AbstractDao implements DaoInterface
     public function findList($cols, array $where, $offset, $limit, 
         array $order = array(), array $group = array())
     {
+        $result = $this->findRawList($cols, $where, $offset, $limit, $order, $group);
+        if ($result) {
+            return $this->entityResultSet($result);
+        }
+    }
+
+    /**
+     * findMap[AsBlaBlaBla]
+     */
+    public function __call($method, $args)
+    {
+        $mapCol = null;
+        if ($method == 'findMap') {
+            $mapCol = $this->getPrimaryKey();
+        } elseif (($pos = strpos($method, 'findMapAs')) !== false) {
+            $mapCol = NamingUtil::studlyCaseToUnderscore(substr($method, $post + 1));
+        }
+        if ($mapCol !== null) {
+            $result = call_user_func_array([$this, 'findRawList'], $args);
+            if ($result) {
+                $map = array();
+                foreach ($result as $row) {
+                    $map[$row[$mapCol]] = $row;
+                }
+                return $this->entityResultSet($map);
+            }
+        }
+    }
+
+    protected function findRawList($cols, array $where, $offset, $limit, 
+        array $order = array(), array $group = array())
+    {
         $qb = $this->conn->createQueryBuilder();
         $this->applyWhere($qb, $where, self::DB_OP_SELECT);
         // $offset和$limit同为0时，才表示取全部记录，不分页
@@ -358,27 +394,11 @@ abstract class AbstractDao implements DaoInterface
         if ($group) {
             $this->applyGroup($qb, $group);
         }
-        $result = $qb
+        return $qb
             ->select($this->parseCols($cols))
             ->from($this->parseTable($where, self::DB_OP_SELECT))
             ->execute()
             ->fetchAll();
-        if ($result) {
-            return $this->entityResultSet($result);
-        }
-    }
-
-    public function findMap($cols, array $where, $offset, $limit, 
-        array $order = array(), array $group = array())
-    {
-        $list = $this->findList($cols, $where, $offset, $limit, $order, $group);
-        if ($list) {
-            $map = array();
-            foreach ($list as $v) {
-                $map[$v->getPrimaryValue()] = $v;
-            }
-            return $map;
-        }
     }
 
     public function findNum(array $where, $col = '*', array $group = array())
@@ -395,7 +415,7 @@ abstract class AbstractDao implements DaoInterface
             ->fetch();
         return $result['num'];
     }
- 
+
     /**
      * 没做字段的反引号操作，请确保字段中没有mysql保留字
      *
