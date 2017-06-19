@@ -381,6 +381,8 @@ abstract class AbstractDao implements DaoInterface
                 }
                 return $this->entityResultSet($map);
             }
+        } else {
+            throw new DebugException(sprintf('方法"%s"不存在', $method));
         }
     }
 
