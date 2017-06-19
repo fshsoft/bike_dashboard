@@ -6,6 +6,7 @@
     <parameters>
         <parameter key="bike.dashboard.dao.primary.admin.class">Bike\Dashboard\Db\Primary\AdminDao</parameter>
         <parameter key="bike.dashboard.dao.partner.bike.class">Bike\Dashboard\Db\Partner\BikeDao</parameter>
+        <parameter key="bike.dashboard.mongodb.dao.bike.class">Bike\Dashboard\Mongodb\Dao\BikeDao</parameter>
     </parameters>
 
     <services>
@@ -20,6 +21,9 @@
             <argument>%bike.dashboard.params.dao.partner.db_name%</argument>
             <argument>%bike.dashboard.params.dao.partner.prefix%</argument>
             <argument>Bike\Dashboard\Db\Partner\Bike</argument>
+        </service>
+        <service id="bike.dashboard.mongodb.dao.bike" class="%bike.dashboard.mongodb.dao.bike.class%">
+            <argument>Bike\Dashboard\Mongodb\Dao\BikeDao</argument>
         </service>
     </services>
 </container>

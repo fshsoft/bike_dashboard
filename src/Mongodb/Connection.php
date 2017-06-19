@@ -2,6 +2,8 @@
 
 namespace Bike\Dashboard\Mongodb;
 
+use MongoDB\Driver\Manager as Driver;
+
 use Bike\Dashboard\Exception\Debug\DebugException;
 
 class Connection
@@ -25,8 +27,8 @@ class Connection
 
     protected function connect()
     {   
-        if ($this->driver === null) {     
-            $driver = new MongoDB\Driver\Manager("mongodb://".$this->host.":".$this->port);
+        if ($this->driver === null) {   
+            $driver = new Driver("mongodb://".$this->host.":".$this->port);
             if (!$driver) {
                 throw new DebugException('MongoDB<' . $this->host . ':' . $this->port . '>无法连接');
             }

@@ -8,11 +8,13 @@ use Bike\Dashboard\Service\AbstractService;
 use Bike\Dashboard\Util\ArgUtil;
 use Bike\Dashboard\Db\Primary\Bike as PrimaryBike;
 use Bike\Dashboard\Db\Partner\Bike as PartnerBike;
+use Bike\Dashboard\Mongodb\Dao\BikeDao as MongoBike;
 use Bike\Dashboard\Db\Primary\BikeIdGenrator;
 use Bike\Dashboard\Db\Primary\User;
 
 class BikeService extends AbstractService
 {
+
     public function createBike(array $data)
     {
         $primaryBikeDao = $this->getPrimaryBikeDao();
@@ -42,15 +44,23 @@ class BikeService extends AbstractService
                 ->setLat($data['lat'])
                 ->setCreateTime($time);
             $partnerBikeDao->create($partnerBike);
+
+            $data['id'] = $id;
+            $data['status'] = 1;
+            $mongoBikeDao = $this->getMongodbBikeDao();
+            $mongoBikeDao->insert($data);
+
             $primaryBikeConn->commit();
             $partnerBikeConn->commit();
             $bikeIdGeneratorConn->commit();
+
         } catch (\Exception $e) {
             $primaryBikeConn->rollBack();
             $partnerBikeConn->rollBack();
             $bikeIdGeneratorConn->rollBack();
             throw $e;
-        }
+        }    
+
     }
 
     public function searchBike(array $args, $page, $pageNum)
@@ -89,6 +99,13 @@ class BikeService extends AbstractService
         );
     }
 
+    public function searchBikesInMongo($lng, $lat, $maxdistance, array $status, $options)
+    {
+        $mongoBikeDao = $this->getMongodbBikeDao();
+        $bikeList = $mongoBikeDao->searchBikes($lng, $lat, $maxdistance, $status, $options);
+        return $bikeList;
+    }
+
     public function editBike($id,array $data)
     {
         $primaryBikeDao = $this->getPrimaryBikeDao();
@@ -100,6 +117,11 @@ class BikeService extends AbstractService
         try {
             $primaryBikeDao->update($id,$data);
             $partnerBikeDao->update($id,$data);
+
+            $data['id'] = $id;
+            $mongoBikeDao = $this->getMongodbBikeDao();
+            $mongoBikeDao->update($data);
+
             $primaryBikeConn->commit();
             $partnerBikeConn->commit();
         } catch (\Exception $e) {
@@ -137,6 +159,11 @@ class BikeService extends AbstractService
     protected function getPrimaryBikeDao()
     {
         return $this->container->get('bike.dashboard.dao.primary.bike');
+    }
+
+    protected function getMongodbBikeDao()
+    {
+        return $this->container->get('bike.dashboard.mongodb.dao.bike');
     }
 
     protected function getBikeIdGeneratorDao()

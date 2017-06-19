@@ -2,14 +2,16 @@
 
 namespace Bike\Dashboard\Mongodb\Dao;
 
-class Bike extends AbstractDao
-{
+use Bike\Dashboard\Util\ArgUtil;
 
-    
-    protected static $cols = array(
-        'id' => null,
-        'status' => null,
-        'lat' => '',
-        'lng' => '',
-    );
+class BikeDao extends AbstractDao
+{
+    protected static $fields = array( 
+    	'_id' => null,
+		'loc' => array( 
+		  'type' => 'Point', 
+		  'coordinates' => null 
+		), 
+		'status' => null
+	); 
 }

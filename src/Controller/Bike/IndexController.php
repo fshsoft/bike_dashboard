@@ -38,8 +38,6 @@ class IndexController extends AbstractController
      */
     public function newbikeAction(Request $request)
     {
-        $userDao = $this->container->get('bike.dashboard.dao.primary.user');
-        $userList = $userDao->findList('*', array(), 0, 0);
         if ($request->isMethod('post')) {
             $data = $request->request->all();
             $bikeService = $this->get('bike.dashboard.service.bike');
@@ -50,9 +48,7 @@ class IndexController extends AbstractController
                 return $this->jsonError($e);
             }
         }
-        return array(
-            'userlist' => $userList
-        );
+        return array();
     }
 
     /**
@@ -62,8 +58,6 @@ class IndexController extends AbstractController
     public function editAction(Request $request,$id)
     {
         $bikeService = $this->get('bike.dashboard.service.bike');
-        $userDao = $this->container->get('bike.dashboard.dao.primary.user');
-        $userList = $userDao->findList('*', array(), 0, 0);
         if ($request->isMethod('post')) {
             $data = $request->request->all();
             try {
@@ -74,7 +68,7 @@ class IndexController extends AbstractController
             }
         } else {
             $bike = $bikeService->getBikeById($id);
-            return ['bike'=>$bike,'userlist' => $userList];
+            return ['bike'=>$bike];
         }
     } 
 

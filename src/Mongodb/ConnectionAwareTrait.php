@@ -9,6 +9,7 @@ trait ConnectionAwareTrait
     public function setConn(Connection $conn)
     {
         $this->conn = $conn;
+        print_r($conn);die;
         return $this;
     }
 }
